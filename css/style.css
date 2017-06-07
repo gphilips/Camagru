@@ -1,0 +1,179 @@
+/******************
+*   GENERAL
+******************/
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+nav {
+    width: 100%;
+    padding: 0px;
+    margin-bottom: 5vh;
+    background-color: rgba(94, 94, 94, 0.90);
+}
+nav ul {
+    display: inline-block;
+    width: 90vw;
+    padding: 0vh 5vw;
+    margin: 10px 0px;
+}
+nav li {
+    display: inline-block;
+}
+ 
+footer {
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    height:30px;
+    width: 100%;
+    text-align: center;
+    color: #4d4d4d;
+}
+
+form {
+    margin: 0 auto;
+    padding: 36px 9vw 10px;
+}
+form input[type] {
+    width: 41vw;
+    height: 25px;
+    margin: 5px 0px;
+    border-radius: 4px;
+    text-align: center;
+    color: #4d4d4d;
+    font-size: 15px;
+}
+form input[type='submit'] {
+    width: 42vw;
+    height: 35px;
+    margin: 5px 0px;
+    border: none;
+    color: #fff;
+    background-color: #e74c3c;
+}
+
+a {
+    text-decoration: none;
+}
+
+span {
+    color: #e74c3c;
+}
+
+#logo {
+    float: left;
+}
+#logo a img {
+    width: 35px;
+}
+#links {
+    float: right;
+    padding-top: 15px;
+}
+#links li {
+    padding: 0vh 1vw;
+}
+#links a {
+    color: #fff;
+}
+
+.alert-danger {
+    width: 60%;
+    margin: 0 auto;
+    color: #7e2920;
+    background-color: rgba(217, 115, 104, 0.75);
+}
+.alert-success {
+    width: 60%;
+    text-align: center;
+    padding: 5px 0px;
+    margin: 20px auto 0px;
+    color: #39571b;
+    background-color: rgba(144, 178, 109, 0.75);
+}
+
+/******************
+*   LANDING PAGE
+******************/
+
+#no-scroll{
+    overflow: hidden;
+}
+
+.bg-img {
+    background: linear-gradient(rgba(0,0,0,0.50), rgba(0,0,0,1)),
+                 url('../img/bg-landing.jpg') center no-repeat;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    position: fixed;
+    background-size: cover;
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
+}
+
+.title {
+    margin: 0vh 20vw;
+    text-align: center;
+    color: #fff;
+}
+.title h2 {
+    font-size: 20px;
+    color: #c3c3c3;
+}
+.title h1 img {
+    width: 25px;
+}
+
+.login-bloc {
+    width: 60%;
+    height: 265px;
+    margin: 20px auto;
+    color: #fff;
+    background-color: rgba(207, 207, 207, 0.15);
+}
+.login-bloc form {
+    margin: 0 auto;
+    padding: 36px 9vw 10px;
+}
+
+.detail {
+    text-align: center;
+}
+.detail p {
+    margin: 10px;
+}
+.detail a {
+    font-size: 13px;
+    color:#fff;
+}
+
+/******************
+*   REGISTER PAGE
+******************/
+
+.register-bloc {
+    width: 60%;
+    height: 265px;
+    margin: 20px auto;
+    color: #fff;
+    background-color: rgba(207, 207, 207, 0.15);
+}
+.register-bloc form {
+    margin: 0 auto;
+    padding: 10px 9vw;
+}
+
+
+
+
