@@ -1,9 +1,6 @@
-<?php 
-if (session_status() == PHP_SESSION_NONE){
-	session_start();
-}
+<?php
+$session = Session::getInstance();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,27 +21,31 @@ if (session_status() == PHP_SESSION_NONE){
 	<nav>
 		<ul>
 			<div id="logo">
-				<a href='#'><img src='img/logo-camagru.png' alt="logo-camagru"></a>
+				<a href='index.php'><img src='img/logo-camagru.png' alt="logo-camagru"></a>
 			</div>
 			<div id="links">
-				<li>
-					<a href="register.php">Register</a>
-				</li>
-				<li>
-					<a href="index.php">Log In</a>
-				</li>
-
+				<?php if ($session->read_session('auth')) { ?>
+					<li>
+						<a href="templates/logout.php">Log Out</a>
+					</li>
+				<?php } else { ?>
+					<li>
+						<a href="register.php">Register</a>
+					</li>
+					<li>
+						<a href="index.php">Log In</a>
+					</li>
+				<?php } ?>
 			</div>
 		</ul>
 	</nav>
 
-	<?php if (isset($_SESSION['flash'])) { ?>
-		<?php foreach ($_SESSION as $type => $message) { ?>
-			<div class="alert-".<?= $type; ?>.">
-				<?= $message; ?>
+	<?php if ($session->hasFlashes()) { ?>
+		<?php foreach ($session->getFlashes() as $type => $message) { ?>
+			<div class="alert-<?= $type; ?>">
+				<p><?= $message; ?></p>
 			</div>
 	
 		<?php } ?>
-		<?php unset($_SESSION['flash']); ?>
 	<?php } ?>
 

@@ -1,5 +1,5 @@
 <?php 
-require 'functions/auth.php'; 
+require 'scripts/check_account.php';
 require 'templates/header.php';
 ?>
 
@@ -27,7 +27,7 @@ require 'templates/header.php';
 			<input type="text" name="username" placeholder="Username">
 			<input type="email" name="email" placeholder="Email">
 			<input type="password" name="pwd" placeholder="Password">
-			<input type="password" name="confirm-pwd" placeholder="Confirm password">
+			<input type="password" name="pwd_confirm" placeholder="Confirm password">
 			
 			<input type="submit" value="Register">
 		</form>

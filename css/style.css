@@ -84,26 +84,28 @@ span {
 
 .alert-danger {
     width: 60%;
+    padding: 1px 0px;
     margin: 0 auto;
+    text-align: center;
     color: #7e2920;
     background-color: rgba(217, 115, 104, 0.75);
 }
 .alert-success {
     width: 60%;
-    text-align: center;
     padding: 5px 0px;
     margin: 20px auto 0px;
+    text-align: center;
     color: #39571b;
     background-color: rgba(144, 178, 109, 0.75);
+}
+
+#no-scroll{
+    overflow: hidden;
 }
 
 /******************
 *   LANDING PAGE
 ******************/
-
-#no-scroll{
-    overflow: hidden;
-}
 
 .bg-img {
     background: linear-gradient(rgba(0,0,0,0.50), rgba(0,0,0,1)),

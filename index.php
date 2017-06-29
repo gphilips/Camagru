@@ -1,4 +1,7 @@
-<?php require 'templates/header.php'; ?>
+<?php
+require 'scripts/autoconnect.php';
+require 'templates/header.php';
+?>
 
 <div id="no-scroll">
 	<div class="bg-img"></div>
@@ -9,16 +12,16 @@
 	</div>
 
 	<div class="login-bloc">
-		<form action="#" method="POST">
-			<input type="text" name="username" placeholder="Username">
+		<form action="account.php" method="POST">
+			<input type="text" name="username" placeholder="Username or Email">
 			<input type="password" name="pwd" placeholder="Password">
 			<input type="submit" value="Log In">
 		</form>
 		<div class="detail">
 			<div id="remember">
-				<input type="checkbox" name="remember"> Remember me
+				<input type="checkbox" name="remember" value="1"> Remember me
 			</div>
-			<p><a href="#">Forgotten password?</a></p>
+			<p><a href="forget.php">Forgotten password?</a></p>
 			<p><a href="register.php"><span>Register</span></a></p>
 		</div>
 	</div>
