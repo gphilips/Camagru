@@ -104,7 +104,7 @@ span {
 }
 
 /******************
-*   LANDING PAGE
+*   INDEX
 ******************/
 
 .bg-img {
@@ -147,6 +147,16 @@ span {
 .login-bloc form {
     margin: 0 auto;
     padding: 36px 9vw 10px;
+}
+
+#remember {
+    width: 100%;
+    height: 18px;
+    text-align: center;
+}
+#remember input[type='checkbox'] {
+    width: 25px;
+    height: 15px;
 }
 
 .detail {

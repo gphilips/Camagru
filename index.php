@@ -16,11 +16,11 @@ require 'templates/header.php';
 			<input type="text" name="username" placeholder="Username or Email">
 			<input type="password" name="pwd" placeholder="Password">
 			<input type="submit" value="Log In">
+			<div id="remember">
+				<input type="checkbox" name="remember" checked>Remember me
+			</div>
 		</form>
 		<div class="detail">
-			<div id="remember">
-				<input type="checkbox" name="remember" value="1"> Remember me
-			</div>
 			<p><a href="forget.php">Forgotten password?</a></p>
 			<p><a href="register.php"><span>Register</span></a></p>
 		</div>

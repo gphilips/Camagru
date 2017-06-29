@@ -80,13 +80,13 @@ class Auth
 			
 			if ($user)
 			{
-				$result = $user_id.'=='.$user['remember_token'].hash('whirlpool', $user_id);
+				$result = $user_id.'=='.$user['remember_token'];
 				
 				if ($result == $remember_token)
 				{
 					$this->connect($user);
 					setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 7);
-					App::redirect('account.php');
+					//App::redirect('account.php');
 				}
 				else
 					setcookie('remember', NULL, -1);
@@ -100,18 +100,17 @@ class Auth
 	{
 		$remember_token = bin2hex(random_bytes(50));
 		$req = $db->query("UPDATE users SET remember_token = ? WHERE id = ?",[$remember_token, $user_id]);
-
-		setcookie('remember', $user_id.'=='.$remember_token.hash('whirlpool', $user_id), time() + 60 * 60 * 24 * 7);
+		setcookie('remember', $user_id.'=='.$remember_token, time() + 60 * 60 * 24 * 7);
 	}
 
-	public function login($db, $username, $password, $remember = false)
+	public function login($db, $username, $password, $remember)
 	{
 		$req = $db->query("SELECT * FROM users WHERE (username = :username OR email = :username) AND confirm_at IS NOT NULL", ['username' => $username]);
 		$user = $req->fetch();
 		if (hash('whirlpool', $password) == $user['password'])
 		{
 			$this->connect($user);
-			
+
 			if ($remember)
 				$this->rememberToken($db, $user['id']);
 

@@ -9,7 +9,7 @@ $auth = new Auth($session);
 if (isset($_POST['username']) && isset($_POST['pwd']) 
 	&& !empty($_POST) && !empty($_POST['username']) && !empty($_POST['pwd']))
 {
-	$user = $auth->login($db, $_POST['username'], $_POST['pwd']);
+	$user = $auth->login($db, $_POST['username'], $_POST['pwd'], $_POST['remember']);
 	if (!$user)
 	{
 		$session->setFlash('danger', "Username/Email or password is incorrect");
@@ -17,7 +17,7 @@ if (isset($_POST['username']) && isset($_POST['pwd'])
 	}
 	
 	if (!$user['confirm_at'] || $user['confirm_token'])
-			$auth->restrict();	
+			$auth->restrict();
 }
 else
 	$auth->restrict();
