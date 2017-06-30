@@ -2,11 +2,20 @@
 require 'autoload.php';
 
 $session = Session::getInstance();
+$auth = new Auth($session);
 
-setcookie('remember', NULL, -1);
+if (isset($_COOKIE['remember']))
+{
+	unset($_COOKIE['remember']);
+	setcookie('remember', '', time()-3600, '/');
+}
+
 $session->delete_session('auth');
 
 $session->setFlash('success', "You are now logged out");
 
-App::redirect('../index.php');
+if (!$auth->isConnected())
+{
+	App::redirect('/camagru/index.php');
+}
 ?>

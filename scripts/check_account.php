@@ -1,6 +1,6 @@
 <?php 
-	require './templates/autoload.php';
-	require_once './config/setup.php';
+	require 'templates/autoload.php';
+	require_once 'config/setup.php';
 
 	$db = App::getDatabase($pdo);
 	
@@ -29,7 +29,7 @@
 			
 			$session->setFlash('success', "Your account has been successfully registered ! We have sent you an email confirmation.");
 
-			App::redirect('./index.php');
+			App::redirect('index.php');
 		}
 		else
 			$errors = $validate->getErrors();

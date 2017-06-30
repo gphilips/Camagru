@@ -1,6 +1,6 @@
 <?php
-require './templates/autoload.php';
-require_once './config/setup.php';
+require 'templates/autoload.php';
+require_once 'config/setup.php';
 
 $db = App::getDatabase($pdo);
 $session = Session::getInstance();
@@ -13,7 +13,7 @@ if (isset($_POST['username']) && isset($_POST['pwd'])
 	if (!$user)
 	{
 		$session->setFlash('danger', "Username/Email or password is incorrect");
-		App::redirect('./index.php');
+		App::redirect('index.php');
 	}
 	
 	if (!$user['confirm_at'] || $user['confirm_token'])

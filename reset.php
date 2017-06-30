@@ -10,11 +10,10 @@ require 'templates/header.php';
 		<h1><img src='img/logo-camagru.png' alt="logo-camagru"> CAMAGRU</h1>
 		<h2>Reset the password</h2>
 	</div>
-
 	<div class="login-bloc">
-		<form action="#" method="POST">
-			<input type="password" name="pwd" placeholder="password">
-			<input type="password" name="confirm-pwd" placeholder="Confirm Password">
+		<form action="index.php" method="POST">
+			<input type="password" name="pwd" placeholder="New password">
+			<input type="password" name="confirm-pwd" placeholder="Confirm the new password">
 			<input type="submit" value="Reset my password">
 		</form>
 	</div>

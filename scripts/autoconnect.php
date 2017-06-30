@@ -10,7 +10,7 @@ $db = App::getDatabase($pdo);
 
 $auth->cookieAutoConnect($db);
 
- if ($auth->isConnected())
+if ($auth->isConnected())
  	App::redirect('account.php');
 
 ?>
