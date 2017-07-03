@@ -192,6 +192,72 @@ span {
     padding: 10px 9vw;
 }
 
+/******************
+*   ACCOUNT PAGE
+******************/
 
+#snap {
+    display: inline;
+    margin: 0vh 2vw;
+}
+
+#webcam, #canvas {
+    width: 40vw;
+}
+
+#take {
+    position: absolute;
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: #e74c3c;
+    border-radius: 25px;
+    margin: -5vh 20vw;
+    outline: none;
+}
+#take img {
+    width: 20px;
+    height: 18px;
+}
+
+#canvas {
+    position: absolute;
+    left: 0;
+    margin: 0vh 2vw;
+}
+#closeIcon {
+    position: absolute;
+    width: 3vw;
+    left: 0;
+    margin: 1vh 3vw;
+    z-index: 1;
+}
+#saveIcon {
+    position: absolute;
+    width: 3vw;
+    left: 35vw;
+    margin: 1vh 3vw;
+    z-index: 1;
+}
+
+#sidebar {
+    display: inline-block;
+    position: absolute;
+    width: 50vw;
+    background-color: rgba(235, 235, 235, 0.55);
+}
+#sidebar h2 {
+    text-align: center;
+    color: #e74c3c;
+}
+
+#mini-pictures {
+    margin: 0 15px;
+}
+
+.miniature {
+    width: 10vw;
+    padding: 10px;
+}
 
 

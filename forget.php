@@ -1,5 +1,5 @@
 <?php 
-require 'scripts/forget_password.php';
+require 'auth/forget_password.php';
 require 'templates/header.php';
 ?>
 

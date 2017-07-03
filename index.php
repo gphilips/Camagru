@@ -1,5 +1,5 @@
 <?php
-require 'scripts/autoconnect.php';
+require 'auth/autoconnect.php';
 require 'templates/header.php';
 ?>
 

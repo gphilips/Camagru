@@ -1,5 +1,5 @@
 <?php 
-require 'scripts/check_account.php';
+require 'auth/check_account.php';
 require 'templates/header.php';
 ?>
 

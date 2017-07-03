@@ -37,7 +37,7 @@ class Auth
  		$headers .= "From: Camagru <no-reply@camagru.com>" . "\r\n";
  		$headers .=  "Reply-To: gphilips@student.42.fr" . "\r\n";
 
-		mail($_POST['email'], $subject, $message, $headers);
+		mail($email, $subject, $message, $headers);
 	}
 
 	public function confirm($db, $user_id, $user_token, $session)
