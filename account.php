@@ -1,7 +1,9 @@
 <?php 
 require 'auth/access_restricted.php';
-require 'members/actions.php';
 require 'templates/header.php';
+
+$user = new User($_SESSION['auth']['id']);
+$photos = $user->getPhotos($db);
 ?>
 
 <div id="snap">
@@ -10,16 +12,27 @@ require 'templates/header.php';
 	<button id="take"><img src="img/cam_icon.png"/></button>
 </div>
 
-<div id="sidebar">
+<div id="sidebar-title">
 	<h2><?php echo $_SESSION['auth']['username']; ?>'s photos</h2>
+</div>
+<div id="sidebar">
 	<div id="mini-pictures">
-	<?php 
+	<?php
 	if (!empty($photos)) {
 		foreach ($photos as $photo) {
 	?>
-		<img class="miniature" id=<?php echo $photo['id']; ?> src=<?php echo $photo['content']; ?> />
+		<img class="miniature" id=<?= $photo['id']; ?> src=<?= $photo['content']; ?> />
+		<div class="actions">
+			<img class='delete-mini mini-icon' src="img/delete.png" alt="delete" />
+			<img class='like-mini mini-icon' src="img/like_inactive.png" alt="like" />
+			<span class='nbLikes'><?= $user->getNbLikes($db, $photo['id']);?></span>
+			<img class='comment-mini mini-icon' src="img/comments.png" alt="comment" />
+			<span class='nbComments'><?= $user->getNbComments($db, $photo['id']); ?></span>
+		</div>
 	<?php }
-	} ?>
+	} else { ?>
+		<p>Choose a filter and press the button to take a picture</p>
+	<?php } ?>
 	</div>
 </div>
 

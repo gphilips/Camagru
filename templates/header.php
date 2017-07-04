@@ -1,6 +1,4 @@
-<?php
-$session = Session::getInstance();
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 

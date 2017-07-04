@@ -15,18 +15,18 @@ class User
 
 	public function getNbLikes($db, $photo_id)
 	{
-		$nbLikes = $db->query('SELECT COUNT(like_users) FROM photos WHERE photo_id = ?', [$photo_id]);
+		$nbLikes = $db->query('SELECT * FROM likes WHERE photo_id = ?', [$photo_id])->rowCount();
 		return $nbLikes;
 	}
 
 	public function comment($db, $username, $comment, $photo_id)
 	{
-		$db->query('INSERT INTO likes SET writer_id = ?, comment = ? WHERE photo_id = ?', [$username, $comment, $photo_id]);
+		$db->query('INSERT INTO comments SET writer = ?, comment = ? WHERE photo_id = ?', [$username, $comment, $photo_id]);
 	}
 
 	public function getNbComments($db, $photo_id)
 	{
-		$nbComments = $db->query('SELECT COUNT(comment) FROM photos WHERE photo_id = ?', [$photo_id]);
+		$nbComments = $db->query('SELECT * FROM comments WHERE photo_id = ?', [$photo_id])->rowCount();
 		return $nbComments;
 	}
 
@@ -39,7 +39,7 @@ class User
 	{
 		if ($photo == false)
 		{
-			$photos = $db->query('SELECT * FROM photos WHERE user_id = ? LIMIT 12', [$this->user_id])->fetchAll();
+			$photos = $db->query('SELECT * FROM photos WHERE user_id = ?', [$this->user_id])->fetchAll();
 			return $photos;
 		}
 		else
@@ -55,6 +55,13 @@ class User
 		return $photo;
 	}
 
+	public function delete($db, $table, $id)
+	{
+		$req = $db->query("DELETE FROM $table WHERE id = ? AND user_id = ?", [$id, $this->user_id]);
+		if ($req)
+			return true;
+		return false;
+	}
 	// public function upload($db,)
 	// {
 

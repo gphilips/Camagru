@@ -1,12 +1,12 @@
 (function() {
-    var snap = document.querySelector('#snap')
-    	cam = document.querySelector('#webcam'),
-    	canvas = document.querySelector('#canvas'),
-    	take = document.querySelector('#take'),
+    var snap = document.getElementById('snap')
+    	cam = document.getElementById('webcam'),
+    	canvas = document.getElementById('canvas'),
+    	take = document.getElementById('take'),
     	closeIconCreated = 0,
     	saveIconCreated = 0;
 
-    take.addEventListener('click', takePicture);
+	take.addEventListener('click', takePicture);
 
 	navigator.getMedia = (navigator.getUserMedia ||
                         navigator.webkitGetUserMedia ||
@@ -75,12 +75,33 @@
 			closeIconCreated = 1;
 			saveIconCreated = 1;
 			closeIcon.addEventListener('click', clearPicture);
-			saveIcon.addEventListener('click', function(){
+			saveIcon.addEventListener('click', function()
+			{
 				var data = canvas.toDataURL('image/png');
-				document.body.innerHTML = '<form id="savePicture" action="members/redirect_account.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
+				document.body.innerHTML = '<form id="savePicture" action="members/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
         		document.getElementById('savePicture').submit();
 				clearPicture();
 			});
 		}
 	}
+
+	var miniature = document.getElementsByClassName('miniature'),
+		del = document.getElementsByClassName('delete-mini'),
+		ids = [];
+		i = -1;
+
+    while (++i < miniature.length)
+    	del[i].addEventListener('click', deletePicture);
+	
+	function deletePicture()
+	{
+		if (confirm('Are you sure you want to delete this picture ?'))
+		{
+			var actions = this.parentElement,
+				miniature = actions.previousElementSibling;
+			document.body.innerHTML = '<form id="deletePicture" action="members/actions.php" method="POST"><input type="hidden" name="imageDelete" value="'+miniature.id+'"></form>';
+        	document.getElementById('deletePicture').submit();
+		}
+	}
+
 })();
