@@ -10,7 +10,7 @@ $auth = new Auth($session);
 if ($auth->confirm($db, $_GET['id'], $_GET['token'], $session))
 {
 	$session->setFlash('success', "Your account has been successfully confirmed !");
-	App::redirect('/camagru/account.php');
+	App::redirect('/camagru/members/account.php');
 }
 else
 {

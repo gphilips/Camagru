@@ -78,7 +78,7 @@
 			saveIcon.addEventListener('click', function()
 			{
 				var data = canvas.toDataURL('image/png');
-				document.body.innerHTML = '<form id="savePicture" action="members/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
+				document.body.innerHTML = '<form id="savePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
         		document.getElementById('savePicture').submit();
 				clearPicture();
 			});
@@ -99,7 +99,7 @@
 		{
 			var actions = this.parentElement,
 				miniature = actions.previousElementSibling;
-			document.body.innerHTML = '<form id="deletePicture" action="members/actions.php" method="POST"><input type="hidden" name="imageDelete" value="'+miniature.id+'"></form>';
+			document.body.innerHTML = '<form id="deletePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageDelete" value="'+miniature.id+'"></form>';
         	document.getElementById('deletePicture').submit();
 		}
 	}

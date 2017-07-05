@@ -11,6 +11,6 @@ $db = App::getDatabase($pdo);
 $auth->cookieAutoConnect($db);
 
 if ($auth->isConnected())
- 	App::redirect('account.php');
+ 	App::redirect('members/account.php');
 
 ?>

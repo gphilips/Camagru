@@ -1,6 +1,6 @@
 <?php
-require 'templates/autoload.php';
-require_once 'config/setup.php';
+require '../templates/autoload.php';
+require_once '../config/setup.php';
 
 $db = App::getDatabase($pdo);
 $session = Session::getInstance();
