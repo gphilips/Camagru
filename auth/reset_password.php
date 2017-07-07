@@ -1,6 +1,6 @@
 <?php
-require 'templates/autoload.php';
-require_once 'config/setup.php';
+require '../templates/autoload.php';
+require_once '../config/setup.php';
 
 if (isset($_GET['id']) && isset($_GET['token']))
 {
@@ -13,11 +13,8 @@ if (isset($_GET['id']) && isset($_GET['token']))
 	{
 		if (!empty($_POST))
 		{
-			echo "YES";
-			die();
 			$validate = new Validate($_POST);
 			$validate->isConfirmed('pwd', "You didn't set your password two times");
-
 			if ($validate->isValid())
 			{
 				$password = hash('whirlpool', $_POST['pwd']);
@@ -25,16 +22,18 @@ if (isset($_GET['id']) && isset($_GET['token']))
 
 				$session->setFlash('success', "Your password has been changed");
 				$auth->connect($user);
+
+				App::redirect('../index.php');
 			}
 		}
 	}
 	else
 	{
 		$session->setFlash('danger', "This token is incorrect");
-		App::redirect('index.php');
+		App::redirect('../index.php');
 	}
 }
 else
-	App::redirect('index.php');
+	App::redirect('../index.php');
 
 ?>

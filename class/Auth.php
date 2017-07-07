@@ -24,9 +24,9 @@ class Auth
 		<table width='100%' border='0' cellspacing='0' cellpadding='0'>
 			<tr>
 				<td style='text-align: center;'>
-					<h1>Reset your password</h1>
-					<p>Please click this link to reset your account:<p>
-					<a href=\"$link\">https://www.camagru.com/reset</a>
+					<h1>Confirm your account</h1>
+					<p>Please click this link to confirm your account:<p>
+					<a href=\"$link\">https://www.camagru.com/confirm</a>
 				</td>
 			</tr>
 		<table>

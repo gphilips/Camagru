@@ -1,4 +1,7 @@
-<?php define('CAMAGRU_ROOT', '/camagru') ?>
+<?php
+define('CAMAGRU_ROOT', '/camagru');
+$session = Session::getInstance();
+?>
 <!DOCTYPE html>
 <html lang="en">
 

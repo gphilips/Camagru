@@ -1,5 +1,5 @@
 <?php 
-require 'auth/reset_password.php';
+require 'templates/autoload.php';
 require 'templates/header.php';
 ?>
 
@@ -11,9 +11,9 @@ require 'templates/header.php';
 		<h2>Reset the password</h2>
 	</div>
 	<div class="login-bloc">
-		<form action="index.php" method="POST">
+		<form action="auth/reset_password.php?id=<?= $_GET[id] ?>&token=<?= $_GET[token] ?>" method="POST">
 			<input type="password" name="pwd" placeholder="New password">
-			<input type="password" name="confirm-pwd" placeholder="Confirm the new password">
+			<input type="password" name="pwd-confirm" placeholder="Confirm the new password">
 			<input type="submit" value="Reset my password">
 		</form>
 	</div>
