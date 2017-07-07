@@ -9,7 +9,17 @@ $photos = $user->getPhotos($db);
 <div id="snap">
 	<video id="webcam"></video>
 	<canvas id="canvas"></canvas>
-	<button id="take"><img src="../img/cam_icon.png"/></button>
+	<button id="take" disabled="true"><img src="<?= CAMAGRU_ROOT ?>/img/cam_icon.png"/></button>
+</div>
+<div id="object">
+	<ul>
+		<li class="imagePng"><img id ='snapback' src="<?= CAMAGRU_ROOT ?>/img/snapback.png" alt='snapback'></li>
+		<li class="imagePng"><img id ='gangsta' src="<?= CAMAGRU_ROOT ?>/img/gangsta.png" alt='gangsta'></li>
+		<li class="imagePng"><img id ='lol' src="<?= CAMAGRU_ROOT ?>/img/lol.png" alt='lol'></li>
+		<li class="imagePng"><img id ='batman' src="<?= CAMAGRU_ROOT ?>/img/batman.png" alt='batman'></li>
+		<li class="imagePng"><img id ='boss' src="<?= CAMAGRU_ROOT ?>/img/boss.png" alt='boss'></li>
+		<li class="imagePng"><img id ='chain' src="<?= CAMAGRU_ROOT ?>/img/chain.png" alt='chain'></li>
+	</ul>
 </div>
 
 <div id="sidebar-title">

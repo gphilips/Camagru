@@ -19,7 +19,7 @@ class Auth
 		$user_id = $db->lastInsertId();
 
 		$subject = "Confirmation of your account";
-		$link = "http://localhost:$_SERVER[SERVER_PORT]/camagru/scripts/confirm.php?id=$user_id&token=".$token;
+		$link = "http://localhost:$_SERVER[SERVER_PORT]/camagru/auth/confirm.php?id=$user_id&token=".$token;
 		$message = "
 		<table width='100%' border='0' cellspacing='0' cellpadding='0'>
 			<tr>
@@ -61,7 +61,7 @@ class Auth
 		if(!$this->session->read_session('auth'))
 		{
 			$this->session->setFlash('danger', "Make sure you confirm your account and you logged in correctly");
-			App::redirect('index.php');
+			App::redirect('/camagru/index.php');
 		}
 	}
 
@@ -94,7 +94,7 @@ class Auth
 				if ($result == $remember_token)
 				{
 					$this->connect($user);
-					setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 7, '/');
+					setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 7, '/members');
 				}
 				else
 					setcookie('remember', NULL, -1);
@@ -108,10 +108,10 @@ class Auth
 	{
 		$remember_token = bin2hex(random_bytes(50));
 		$req = $db->query("UPDATE users SET remember_token = ? WHERE id = ?",[$remember_token, $user_id]);
-		setcookie('remember', $user_id.'=='.$remember_token, time() + 60 * 60 * 24 * 7, '/camagru/account.php');
+		setcookie('remember', $user_id.'=='.$remember_token, time() + 60 * 60 * 24 * 7, '/camagru/members/account.php');
 	}
 
-	public function login($db, $username, $password, $remember)
+	public function login($db, $username, $password, $remember = false)
 	{
 		$req = $db->query("SELECT * FROM users WHERE (username = :username OR email = :username) AND confirm_at IS NOT NULL", ['username' => $username]);
 		$user = $req->fetch();

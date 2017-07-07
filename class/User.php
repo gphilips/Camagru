@@ -8,7 +8,7 @@ class User
 		$this->user_id = $user_id;
 	}
 
-	public function like($db, $username, $photo_id)
+	public function setLike($db, $username, $photo_id)
 	{
 		$db->query('INSERT INTO likes SET like_user = ? WHERE photo_id = ?', [$username, $photo_id]);
 	}
@@ -19,9 +19,9 @@ class User
 		return $nbLikes;
 	}
 
-	public function comment($db, $username, $comment, $photo_id)
+	public function setComment($db, $username, $comment, $photo_id)
 	{
-		$db->query('INSERT INTO comments SET writer = ?, comment = ? WHERE photo_id = ?', [$username, $comment, $photo_id]);
+		$db->query('INSERT INTO comments SET writer = ?, comment = ?, created_at = NOW() WHERE photo_id = ?', [$username, $comment, $photo_id]);
 	}
 
 	public function getNbComments($db, $photo_id)
@@ -30,9 +30,9 @@ class User
 		return $nbComments;
 	}
 
-	public function insertPhoto($db, $photo)
+	public function setPhoto($db, $photo)
 	{
-		$db->query('INSERT INTO photos SET content = ?, user_id = ?', [$photo, $this->user_id]);
+		$db->query('INSERT INTO photos SET content = ?, user_id = ?, created_at = NOW()', [$photo, $this->user_id]);
 	}
 
 	public function getPhotos($db, $photo = false)
@@ -51,7 +51,7 @@ class User
 
 	public function getPhotoOfAllUsers($db)
 	{
-		$photo = $db->query('SELECT * FROM photos')->fetch();
+		$photo = $db->query('SELECT * FROM photos ORDER BY created_at DESC')->fetchAll();
 		return $photo;
 	}
 

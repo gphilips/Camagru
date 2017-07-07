@@ -11,7 +11,7 @@ if ($_POST)
 {
 	if (isset($_POST['imageTaken']) && !empty($_POST['imageTaken']))
 	{
-		$user->insertPhoto($db, $_POST['imageTaken']);
+		$user->setPhoto($db, $_POST['imageTaken']);
 		$session->setFlash('successNav', 'Your picture has been successfully added.');
 	}
 	else if (isset($_POST['imageDelete']) && !empty($_POST['imageDelete']) && is_numeric($_POST['imageDelete']))

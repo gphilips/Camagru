@@ -12,7 +12,7 @@ require 'templates/header.php';
 	</div>
 
 	<div class="login-bloc">
-		<form action="account.php" method="POST">
+		<form action="<?= CAMAGRU_ROOT ?>/members/account.php" method="POST">
 			<input type="text" name="username" placeholder="Username or Email">
 			<input type="password" name="pwd" placeholder="Password">
 			<input type="submit" value="Log In">

@@ -13,7 +13,7 @@ if (isset($_POST['username']) && isset($_POST['pwd'])
 	if (!$user)
 	{
 		$session->setFlash('danger', "Username/Email or password is incorrect");
-		App::redirect('index.php');
+		App::redirect('/camagru/index.php');
 	}
 	
 	if (!$user['confirm_at'] || $user['confirm_token'])

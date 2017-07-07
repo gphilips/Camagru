@@ -192,19 +192,11 @@ span {
 ******************/
 
 .alert-successNav {
-    position: absolute;
-    width: 60%;
-    top: 1%;
-    left: 20%;
     text-align: center;
     color: #39571b;
 }
 
 .alert-dangersNav {
-    position: absolute;
-    width: 60%;
-    top: 1%;
-    left: 20%;
     text-align: center;
     color: #7e2920;
 }
@@ -227,6 +219,7 @@ span {
     border-radius: 25px;
     margin: -5vh 20vw;
     outline: none;
+    visibility: hidden;
 }
 #take img {
     width: 20px;
@@ -270,8 +263,8 @@ span {
     display: inline-block;
     position: absolute;
     width: 50vw;
-    height: 26vw;
-    top: 135px;
+    height: 58%;
+    margin: 48px 0 0;
     overflow: scroll;
     background-color: rgba(235, 235, 235, 0.55);
 }
@@ -324,4 +317,27 @@ span.nbComments {
 }
 .miniature:hover + .actions, .actions:hover {
     visibility: visible;
+}
+
+#object {
+    position: absolute;
+    width: 40vw;
+    margin: 5vh 2vw;
+}
+
+#object ul {
+    margin: 2vh 3vw;
+    padding: 0;
+}
+.imagePng {
+    display: inline-block;
+    border: 2px solid #dfdfdf;
+    border-radius: 10px;
+}
+.imagePng:hover {
+    border: 2px solid #e74c3c;
+}
+.imagePng img {
+    width: 5vw;
+    height: 10vh;
 }
