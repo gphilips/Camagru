@@ -13,7 +13,7 @@ require 'templates/header.php';
 	<div class="login-bloc">
 		<form action="auth/reset_password.php?id=<?= $_GET[id] ?>&token=<?= $_GET[token] ?>" method="POST">
 			<input type="password" name="pwd" placeholder="New password">
-			<input type="password" name="pwd-confirm" placeholder="Confirm the new password">
+			<input type="password" name="pwd_confirm" placeholder="Confirm the new password">
 			<input type="submit" value="Reset my password">
 		</form>
 	</div>

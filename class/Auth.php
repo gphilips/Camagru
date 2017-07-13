@@ -25,6 +25,7 @@ class Auth
 			<tr>
 				<td style='text-align: center;'>
 					<h1>Confirm your account</h1>
+					<p>Thank you for registering on <strong>Camagru</strong> !</p>
 					<p>Please click this link to confirm your account:<p>
 					<a href=\"$link\">https://www.camagru.com/confirm</a>
 				</td>

@@ -12,8 +12,7 @@ catch(Exception $e)
 	die('Erreur : '.$e->getMessage());
 }
 
-$dbExist = $pdo->query("SHOW DATABASES LIKE `db_camagru")->fetch();
-
+$dbExist = $pdo->query("SHOW DATABASES LIKE 'db_camagru'")->rowCount();
 if (!$dbExist)
 {
 	try
@@ -51,7 +50,8 @@ if (!$dbExist)
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `content` longtext NOT NULL,
 			  `created_at` datetime NOT NULL,
-			  `user_id` int(11) NOT NULL FOREIGN KEY REFERENCES `users` (`id`) ON DELETE CASCADE
+			  `user_id` int(11) NOT NULL,
+			  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			';
 
@@ -60,8 +60,10 @@ if (!$dbExist)
 		$sql = '
 			CREATE TABLE IF NOT EXISTS `likes` (
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-			  `user_id` int(11) NOT NULL UNIQUE FOREIGN KEY REFERENCES `users` (`id`) ON DELETE CASCADE,
-			  `photo_id` int(11) NOT NULL FOREIGN KEY REFERENCES `photos` (`id`) ON DELETE CASCADE
+			  `user_id` int(11) NOT NULL UNIQUE,
+			  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+			  `photo_id` int(11) NOT NULL,
+			  FOREIGN KEY (`photo_id`) REFERENCES `photos` (`id`) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			';
 
@@ -73,7 +75,8 @@ if (!$dbExist)
 			  `comment` text NOT NULL,
 			  `writer` varchar(255) NOT NULL,
 			  `created_at` datetime NOT NULL,
-			  `photo_id` int(11) NOT NULL UNIQUE FOREIGN KEY REFERENCES `photos` (`id`) ON DELETE CASCADE
+			  `photo_id` int(11) NOT NULL UNIQUE,
+			  FOREIGN KEY (`photo_id`) REFERENCES `photos` (`id`) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			';
 
