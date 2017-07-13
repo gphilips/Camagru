@@ -8,9 +8,26 @@ class User
 		$this->user_id = $user_id;
 	}
 
-	public function setLike($db, $username, $photo_id)
+	public function getUsername($db, $user_id)
 	{
-		$db->query('INSERT INTO likes SET like_user = ? WHERE photo_id = ?', [$username, $photo_id]);
+		$username = $db->query('SELECT username FROM users WHERE id = ?', [$user_id])->fetchColumn();
+		return $username;
+	}
+
+	public function setLike($db, $photo_id)
+	{
+		$db->query('INSERT INTO likes SET user_id = ?, photo_id = ?', [$this->user_id, $photo_id]);
+	}
+
+	public function deleteLike($db, $photo_id)
+	{
+		$req = $db->query("DELETE FROM likes WHERE user_id = ? AND photo_id = ?", [$this->user_id, $photo_id]);
+	}
+
+	public function getMyLike($db, $photo_id)
+	{
+		$myLike = $db->query('SELECT * FROM likes WHERE user_id = ? AND photo_id = ?', [$this->user_id, $photo_id])->rowCount();
+		return $myLike;
 	}
 
 	public function getNbLikes($db, $photo_id)
@@ -35,36 +52,34 @@ class User
 		$db->query('INSERT INTO photos SET content = ?, user_id = ?, created_at = NOW()', [$photo, $this->user_id]);
 	}
 
-	public function getPhotos($db, $photo = false)
+	public function verifyMyPhoto($db, $photo_id)
 	{
-		if ($photo == false)
-		{
-			$photos = $db->query('SELECT * FROM photos WHERE user_id = ?', [$this->user_id])->fetchAll();
-			return $photos;
-		}
-		else
-		{
-			$photo = $db->query('SELECT * FROM photos WHERE user_id = ?, content = ?', [$this->user_id, $photo])->fetch();
-			return $photo;
-		}
+		$photo = $db->query('SELECT * FROM photos WHERE user_id = ? AND id = ?', [$this->user_id, $photo_id])->rowCount();
+		return $photo;
 	}
 
-	public function getPhotoOfAllUsers($db)
+	public function getMyPhotos($db)
 	{
-		$photo = $db->query('SELECT * FROM photos ORDER BY created_at DESC')->fetchAll();
+		$photos = $db->query('SELECT * FROM photos WHERE user_id = ?', [$this->user_id])->fetchAll();
+		return $photos;
+	}
+
+	public function getPhotoOfAllUsers($db, $start, $nbPhotos)
+	{
+		$photo = $db->query("SELECT * FROM photos ORDER BY created_at DESC LIMIT $start, $nbPhotos")->fetchAll();
 		return $photo;
+	}
+
+	public function nbPhotoOfAllUsers($db)
+	{
+		$nbPhoto = $db->query("SELECT id FROM photos")->rowCount();
+		return $nbPhoto;
 	}
 
 	public function delete($db, $table, $id)
 	{
 		$req = $db->query("DELETE FROM $table WHERE id = ? AND user_id = ?", [$id, $this->user_id]);
-		if ($req)
-			return true;
-		return false;
+		return ($req) ? true : false;
 	}
-	// public function upload($db,)
-	// {
-
-	// }
 }
 ?>

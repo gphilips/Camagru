@@ -9,6 +9,10 @@ body, html {
     font-size: 16px;
 }
 
+#bg {
+    background: linear-gradient(to left, #e74c3c , #FFB88C);
+}
+
 nav {
     width: 100%;
     padding: 0px;
@@ -206,8 +210,35 @@ span {
     margin: 0vh 2vw;
 }
 
-#webcam, #canvas {
+#webcam, #canvas, #importImg {
     width: 40vw;
+}
+
+#importImg {
+    display: inline-block;
+    height: 47vh;
+    border: 2px dotted #fbdcd8;
+    padding: 0;
+    margin: 0;
+}
+#importImg p {
+    display: block;
+    text-align: center;
+    margin: 20vh 0vw 10px;
+    color: #cecece;
+}
+#importImg input[type='file'] {
+    display: block;
+    margin: 0 auto;
+    font-size: 13px;
+    width: 50%;
+}
+
+#importImg input[type='submit'] {
+    display: block;
+    width: 6vw;
+    height: 30px;
+    margin: 5px auto;    
 }
 
 #take {
@@ -275,6 +306,7 @@ span {
 
 .miniature {
     width: 14vw;
+    height: 22vh;
     padding: 10px;
     position: relative;
 }
@@ -297,25 +329,25 @@ span {
 #mini-pictures p {
     text-align: center;
     margin: 8vw 0 0;
-    color: #c4c4c4;
+    color: #a0a0a0;
 }
 #mini-pictures span {
     position: absolute;
     color: #c3c3c3;
     font-size: 1.5vw;
 }
-span.nbLikes {
+#mini-pictures span.nbLikes {
     margin: 19% 0 0 -25%;
 }
-span.nbComments {
+#mini-pictures span.nbComments {
     margin: 19% 0% 0% -15%;
 }
 
-.actions {
+#mini-pictures .actions {
     display: inline;
     visibility: hidden;
 }
-.miniature:hover + .actions, .actions:hover {
+#mini-pictures .miniature:hover + .actions, #mini-pictures .actions:hover {
     visibility: visible;
 }
 
@@ -340,4 +372,67 @@ span.nbComments {
 .imagePng img {
     width: 5vw;
     height: 10vh;
+}
+
+/******************
+*   GALLERY PAGE
+******************/
+
+#gallery {
+    margin: 0 15px;
+}
+
+#gallery .cadre {
+    display: inline-block;
+    margin: 1vh auto;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#gallery .cadre p {
+    text-align: center;
+    margin: 0 0 10px;
+    color: #e74c3c;
+}
+
+#gallery .cadre .actions {
+    position: absolute;
+    width: 16vw;
+}
+#gallery .cadre .actions .delete-mini {
+    margin: -70% 0 0 80%;
+}
+#gallery .cadre .actions .like-mini {
+    margin: 0 0 0 10%;
+}
+#gallery .cadre .actions span.nbLikes {
+    margin: 0 0 0 23%;
+    color: #9e9e9e;
+}
+#gallery .cadre .actions .comment-mini {
+    margin: 0 0 0 42%;
+}
+#gallery .cadre .actions span.nbComments {
+    margin: 0 0 0 55%;
+    color: #9e9e9e;
+}
+
+#gallery #pagination {
+    text-align: center;
+    margin: 4vh 0;
+}
+#gallery #pagination p {
+    display: inline-block;
+}
+#gallery #pagination .numbers a, #gallery #pagination .numSelected {
+    margin: 0 1vw;
+    font-size: 2em;
+    color: #6c605e;
+}
+#gallery #pagination .numbers:hover a, #gallery #pagination .numSelected {
+    color: #e74c3c;
+}
+#gallery #pagination .numSelected {
+    display: inline-block;
 }

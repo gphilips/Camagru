@@ -3,7 +3,7 @@ require '../auth/access_restricted.php';
 require '../templates/header.php';
 
 $user = new User($_SESSION['auth']['id']);
-$photos = $user->getPhotos($db);
+$photos = $user->getMyPhotos($db);
 ?>
 
 <div id="snap">
@@ -33,7 +33,9 @@ $photos = $user->getPhotos($db);
 	?>
 		<img class="miniature" id=<?= $photo['id']; ?> src=<?= $photo['content']; ?> />
 		<div class="actions">
-			<img class='delete-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />
+			<?php if ($user->verifyMyPhoto($db, $photo['id'])) { ?>
+				<img class='delete-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />
+			<?php } ?>
 			<img class='like-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/like_inactive.png" alt="like" />
 			<span class='nbLikes'><?= $user->getNbLikes($db, $photo['id']);?></span>
 			<img class='comment-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/comments.png" alt="comment" />
@@ -46,5 +48,6 @@ $photos = $user->getPhotos($db);
 	</div>
 </div>
 
-<script type="text/javascript" src="../js/webcam.js"></script>
+<script type="text/javascript" src="<?= CAMAGRU_ROOT ?>/js/webcam.js"></script>
+<script type="text/javascript" src="<?= CAMAGRU_ROOT ?>/js/actions_btn.js"></script>
 <?php require '../templates/footer.php'; ?>

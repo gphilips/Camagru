@@ -1,6 +1,10 @@
 <?php
 define('CAMAGRU_ROOT', '/camagru');
 $session = Session::getInstance();
+
+$addId = '';
+if (dirname($_SERVER['PHP_SELF']) == '/camagru/members')
+	$addId = 'id="bg"';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +21,7 @@ $session = Session::getInstance();
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="<?= CAMAGRU_ROOT ?>/css/style.css" rel="stylesheet">
 </head>
-<body>
+<body <?= $addId; ?>>
 
 	<nav>
 		<ul>
@@ -28,9 +32,6 @@ $session = Session::getInstance();
 				<?php if ($session->read_session('auth')) { ?>
 					<li>
 						<a href="<?= CAMAGRU_ROOT ?>/members/gallery.php">Gallery</a>
-					</li>
-					<li>
-						<a href="<?= CAMAGRU_ROOT ?>/members/myaccount.php">My account</a>
 					</li>
 					<li>
 						<a href="<?= CAMAGRU_ROOT ?>/templates/logout.php">Log out</a>

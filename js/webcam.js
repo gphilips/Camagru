@@ -4,7 +4,9 @@
     	canvas = document.getElementById('canvas'),
     	take = document.getElementById('take'),
     	closeIconCreated = 0,
-    	saveIconCreated = 0;
+    	saveIconCreated = 0,
+    	isCamera = false,
+    	imgIsLoad = false;
     
     var imagePng = document.getElementsByClassName('imagePng');
     	snapback = document.getElementById('snapback'),
@@ -19,40 +21,39 @@
 		imagePng[i].addEventListener('click', pictureEnabled);
 
 
-	var miniature = document.getElementsByClassName('miniature'),
-		del = document.getElementsByClassName('delete-mini');
+	var constraints = { video: true, audio: false },
+		setCam = navigator.mediaDevices.getUserMedia(constraints);
 
-	i = -1;
-    while (++i < miniature.length)
-    	del[i].addEventListener('click', deletePicture);
-
-
-	navigator.getMedia = (navigator.getUserMedia ||
-                        navigator.webkitGetUserMedia ||
-                        navigator.mozGetUserMedia ||
-                        navigator.msGetUserMedia);
-
-	navigator.getMedia(
-		{
-		  video: true,
-		  audio: false
-		},
-		function(stream)
-		{
-			if (navigator.mozGetUserMedia)
-				cam.mozSrcObject = stream;
-			else
-			{
-				var vendorURL = (window.URL || window.webkitURL);
-				cam.src = vendorURL.createObjectURL(stream);
-			}
-			cam.play();
-		},
-		function(err)
-		{
-		  console.log("An error occured! " + err);
-		}
+    setCam.then(function haveCamera(mediaStream)
+    {
+    	isCamera = true;
+        cam.srcObject = mediaStream;
+        cam.onloadedmetadata = function () {
+            cam.play();
+        };
+	})
+	.catch(function noCamera()
+	{
+		createImportDiv();
+		var upload = document.getElementById('upload');
+		upload.addEventListener('change', uploadImg);
+	}
 	);
+
+	function uploadImg(e)
+	{
+	    var img = new Image();
+
+	    canvas.style.height = '48vh';
+	    canvas.style.visibility = 'visible';
+	    importImg.style.visibility = 'hidden';
+
+	    img.src = URL.createObjectURL(e.target.files[0]);
+	    img.addEventListener('load', function(){
+	    	canvas.getContext('2d').drawImage(img, 0, 0, 300, 200);
+	    	imgIsLoad = true;
+	    });
+	}
 
 	function clearPicture()
 	{
@@ -62,6 +63,35 @@
 		snap.removeChild(saveIcon);
 		closeIconCreated = 0;
 		saveIconCreated = 0;
+		if (!isCamera)
+			location.reload(false);
+	}
+
+	function createInput()
+	{
+		var input = document.createElement('input');
+		input.type = 'file';
+		input.id = 'upload';
+		input.name = 'upload';
+		input.accept = 'image/jpeg,image/png,image/gif';
+		return input;
+	}
+
+	function createImportDiv()
+	{
+		var importImg = document.createElement('div'),
+			info = document.createElement('p'),
+			text = document.createTextNode('Import your image and choose a filter');
+		
+		isCamera = false;
+		importImg.id = 'importImg';
+		snap.replaceChild(importImg, cam);
+		info.appendChild(text);
+		importImg.appendChild(info);
+
+		input = createInput();
+		importImg.appendChild(input);
+		canvas.style.visibility = 'hidden';
 	}
 
 	function createCloseIcon()
@@ -89,23 +119,27 @@
        	this.style.border = '2px solid #e74c3c';
 
        	imagePngName = this.firstChild.id;
-       	take.disabled = false;
-       	take.style.visibility = 'visible';
-       	take.addEventListener('click', takePicture);
+       	if (isCamera || (!isCamera && imgIsLoad))
+       	{
+	       	take.disabled = false;
+	       	take.style.visibility = 'visible';
+	       	take.addEventListener('click', takePicture);
+	    }
 	}
 	
 	function addPng()
 	{
-		var y1 = cam.offsetHeight,
-			y2 = cam.offsetHeight,
-			x1 = cam.offsetWidth,
-			x2 = cam.offsetWidth;
+		var	canvas = document.getElementById('canvas');
+			y1 = canvas.height,
+			y2 = canvas.height,
+			x1 = canvas.width,
+			x2 = canvas.width;
 
 		if (imagePngName == 'snapback')
 			canvas.getContext('2d').drawImage(snapback, x1 - (x1 / 1.43), 0, x2 - (x2 / 1.70), y2 - (y2 / 1.88));
 		else if (imagePngName == 'gangsta')
 			canvas.getContext('2d').drawImage(gangsta, 0, 0, x2, y2);
-		else if (imagePngName == 'lol') 
+		else if (imagePngName == 'lol')
 			canvas.getContext('2d').drawImage(lol, x1 / 3, y1 - (y1 / 1.05), x2 / 1.73, y2 / 1.71);
 		else if (imagePngName == 'batman')
 			canvas.getContext('2d').drawImage(batman, x1 - (x1 / 1.30), 0, x2 - (x2 / 2.50), y2 / 1.66);
@@ -117,9 +151,18 @@
 
 	function takePicture()
 	{
-		canvas.width = cam.offsetWidth;
-		canvas.height = cam.offsetHeight;
-		canvas.getContext('2d').drawImage(cam, 0, 0, cam.offsetWidth, cam.offsetHeight);
+		if (isCamera)
+		{
+			canvas.width = cam.offsetWidth;
+			canvas.height = cam.offsetHeight;
+			canvas.getContext('2d').drawImage(cam, 0, 0, cam.offsetWidth, cam.offsetHeight);
+		}
+		else
+		{
+			var importImg = document.getElementById('importImg');
+			importImg.style.visibility = 'hidden';
+			canvas.style.visibility = 'visible';
+		}
 		addPng(imagePngName);
 		if (closeIconCreated == 0 && saveIconCreated == 0)
 		{
@@ -133,21 +176,9 @@
 			saveIcon.addEventListener('click', function()
 			{
 				var data = canvas.toDataURL('image/png');
-				document.body.innerHTML = '<form id="savePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
+				this.innerHTML = '<form id="savePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
         		document.getElementById('savePicture').submit();
-				clearPicture();
 			});
-		}
-	}
-	
-	function deletePicture()
-	{
-		if (confirm('Are you sure you want to delete this picture ?'))
-		{
-			var actions = this.parentElement,
-				miniature = actions.previousElementSibling;
-			document.body.innerHTML = '<form id="deletePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageDelete" value="'+miniature.id+'"></form>';
-        	document.getElementById('deletePicture').submit();
 		}
 	}
 

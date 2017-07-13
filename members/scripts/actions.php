@@ -21,8 +21,27 @@ if ($_POST)
 	}
 	else
 		$session->setFlash('dangerNav', 'Sorry, your request has failed.');
+
+	if ($_SERVER['HTTP_REFERER'] == 'http://localhost:8888/camagru/members/gallery.php')
+		App::redirect('../gallery.php');
+	elseif ($_SERVER['HTTP_REFERER'] == 'http://localhost:8888/camagru/members/account.php')
+		App::redirect('../account.php');
+	else
+		App::redirect('../account.php');
+}
+else if ($_GET)
+{
+	if (isset($_GET['actions']) && !empty($_GET['actions']) && isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id']))
+	{
+		if ($_GET['actions'] == 'like')
+			$user->setLike($db, $_GET['id']);
+		else if ($_GET['actions'] == 'dislike')
+			$user->deleteLike($db, $_GET['id']);
+
+		App::redirect('../gallery.php');
+	}
+	else
+		App::redirect('../gallery.php');
 }
 
-
-App::redirect('../account.php');
 ?>
