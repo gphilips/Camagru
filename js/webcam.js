@@ -42,7 +42,10 @@
 
 	function uploadImg(e)
 	{
-	    var img = new Image();
+	    var success = document.createElement('div'),
+	    	newP = document.createElement('p'),
+	    	text = document.createTextNode('Your picture has been successfully uploaded.'),
+	    	img = new Image();
 
 	    canvas.style.height = '48vh';
 	    canvas.style.visibility = 'visible';
@@ -52,6 +55,10 @@
 	    img.addEventListener('load', function(){
 	    	canvas.getContext('2d').drawImage(img, 0, 0, 300, 200);
 	    	imgIsLoad = true;
+	    	success.setAttribute('class', 'alert-successNav');
+	    	newP.appendChild(text);
+			success.appendChild(newP);
+	    	document.body.insertBefore(success, snap);
 	    });
 	}
 

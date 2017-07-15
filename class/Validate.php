@@ -24,10 +24,12 @@ class Validate
 			$this->errors[$input] = $flashError;
 	}
 
-	public function isUnique($input, $db, $table, $flashError)
+	public function isUnique($input, $db, $table, $flashError = false)
 	{
 		$exist = $db->query("SELECT id FROM $table WHERE $input = ?", [$this->getInput($input)])->fetch();
 
+		if ($exist && $flashError == false)
+			return (!$exist) ? false : $exist['id'];
 		if ($exist)
 			$this->errors[$input] = $flashError;
 	}

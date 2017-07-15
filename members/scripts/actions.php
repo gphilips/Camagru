@@ -13,21 +13,34 @@ if ($_POST)
 	{
 		$user->setPhoto($db, $_POST['imageTaken']);
 		$session->setFlash('successNav', 'Your picture has been successfully added.');
+		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else if (isset($_POST['imageDelete']) && !empty($_POST['imageDelete']) && is_numeric($_POST['imageDelete']))
 	{
 		$user->delete($db, 'photos', $_POST['imageDelete']);
 		$session->setFlash('successNav', 'Your picture has been successfully removed.');
+		App::redirect($_SERVER['HTTP_REFERER']);
+	}
+	else if (isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['send']) && !empty($_POST['send']) && is_numeric($_POST['send']))
+	{
+		$user->setComment($db, $_POST['content'], $_POST['send']);
+		$session->setFlash('successModal', 'Your comment has been successfully sent.');
+		App::redirect($_SERVER['HTTP_REFERER']);
+	}
+	else if (isset($_POST['commentDelete']) && !empty($_POST['commentDelete']) && is_numeric($_POST['commentDelete']))
+	{
+		$user->delete($db, 'comments', $_POST['commentDelete']);
+		$session->setFlash('successModal', 'Your comment has been successfully removed.');
+		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else
+	{
 		$session->setFlash('dangerNav', 'Sorry, your request has failed.');
-
-	if ($_SERVER['HTTP_REFERER'] == 'http://localhost:8888/camagru/members/gallery.php')
-		App::redirect('../gallery.php');
-	elseif ($_SERVER['HTTP_REFERER'] == 'http://localhost:8888/camagru/members/account.php')
-		App::redirect('../account.php');
-	else
-		App::redirect('../account.php');
+		if ($_SERVER['HTTP_REFERER'] == 'gallery.php')
+			App::redirect($_SERVER['HTTP_REFERER']);
+		else
+			App::redirect('../account.php');
+	}
 }
 else if ($_GET)
 {
@@ -38,7 +51,27 @@ else if ($_GET)
 		else if ($_GET['actions'] == 'dislike')
 			$user->deleteLike($db, $_GET['id']);
 
-		App::redirect('../gallery.php');
+		App::redirect($_SERVER['HTTP_REFERER']);
+	}
+	else if (isset($_GET['username']) && !empty($_GET['username']))
+	{
+		$validate = new Validate($_GET);
+		if ($user_id = $validate->isUnique('username', $db, 'users'))
+		{
+			$name = $user->getUsername($db, $user_id);
+			$nbPhoto = $user->nbPhotoOfUser($db, $user_id);
+			if ($nbPhoto > 0)
+				$session->setFlash('successNav', "We found $name"."'s photos");
+			else
+				$session->setFlash('dangersNav', "Sorry, there is no photos yet of $name");
+			App::redirect("../gallery.php?search=$user_id");
+		}
+		else
+		{
+			$session->setFlash('dangersNav', 'Sorry, this username does not tell us anything.');
+			App::redirect('../gallery.php');
+		}
+
 	}
 	else
 		App::redirect('../gallery.php');

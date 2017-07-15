@@ -36,9 +36,21 @@ class User
 		return $nbLikes;
 	}
 
-	public function setComment($db, $username, $comment, $photo_id)
+	public function setComment($db, $comment, $photo_id)
 	{
-		$db->query('INSERT INTO comments SET writer = ?, comment = ?, created_at = NOW() WHERE photo_id = ?', [$username, $comment, $photo_id]);
+		$db->query('INSERT INTO comments SET comment = ?, user_id = ?, created_at = NOW(), photo_id = ?', [$comment, $this->user_id, $photo_id]);
+	}
+
+	public function verifyMyComment($db, $comment_id)
+	{
+		$comment = $db->query('SELECT * FROM comments WHERE user_id = ? AND id = ?', [$this->user_id, $comment_id])->rowCount();
+		return (!$comment) ? 0 : 1;
+	}
+
+	public function getComments($db, $photo_id)
+	{
+		$comments = $db->query('SELECT * FROM comments WHERE photo_id = ?', [$photo_id])->fetchAll();
+		return $comments;
 	}
 
 	public function getNbComments($db, $photo_id)
@@ -55,13 +67,31 @@ class User
 	public function verifyMyPhoto($db, $photo_id)
 	{
 		$photo = $db->query('SELECT * FROM photos WHERE user_id = ? AND id = ?', [$this->user_id, $photo_id])->rowCount();
-		return $photo;
+		return (!$photo) ? 0 : 1;
 	}
 
 	public function getMyPhotos($db)
 	{
 		$photos = $db->query('SELECT * FROM photos WHERE user_id = ?', [$this->user_id])->fetchAll();
 		return $photos;
+	}
+
+	public function getPhoto($db, $photo_id)
+	{
+		$photo = $db->query('SELECT * FROM photos WHERE id = ?', [$photo_id])->fetch();
+		return $photo;
+	}
+
+	public function getPhotoOfUser($db, $start, $nbPhotos, $user_id)
+	{
+		$photo = $db->query("SELECT * FROM photos WHERE user_id = ? ORDER BY created_at DESC LIMIT $start, $nbPhotos", [$user_id])->fetchAll();
+		return $photo;
+	}
+
+	public function nbPhotoOfUser($db, $user_id)
+	{
+		$nbPhoto = $db->query("SELECT id FROM photos WHERE user_id = ?", [$user_id])->rowCount();
+		return $nbPhoto;
 	}
 
 	public function getPhotoOfAllUsers($db, $start, $nbPhotos)
