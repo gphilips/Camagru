@@ -50,7 +50,7 @@ if (!$dbExist)
 			  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
 			  `content` longtext NOT NULL,
 			  `created_at` datetime NOT NULL,
-			  `user_id` int(11) NOT NULL,
+			  `user_id` int(11) NOT NULL INDEX,
 			  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			';

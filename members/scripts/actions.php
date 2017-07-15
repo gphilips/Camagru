@@ -11,25 +11,25 @@ if ($_POST)
 {
 	if (isset($_POST['imageTaken']) && !empty($_POST['imageTaken']))
 	{
-		$user->setPhoto($db, $_POST['imageTaken']);
+		$user->setPhoto($db, htmlspecialchars($_POST['imageTaken']));
 		$session->setFlash('successNav', 'Your picture has been successfully added.');
 		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else if (isset($_POST['imageDelete']) && !empty($_POST['imageDelete']) && is_numeric($_POST['imageDelete']))
 	{
-		$user->delete($db, 'photos', $_POST['imageDelete']);
+		$user->delete($db, 'photos', intval($_POST['imageDelete']));
 		$session->setFlash('successNav', 'Your picture has been successfully removed.');
 		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else if (isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['send']) && !empty($_POST['send']) && is_numeric($_POST['send']))
 	{
-		$user->setComment($db, $_POST['content'], $_POST['send']);
+		$user->setComment($db, htmlspecialchars($_POST['content']), intval($_POST['send']));
 		$session->setFlash('successModal', 'Your comment has been successfully sent.');
 		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else if (isset($_POST['commentDelete']) && !empty($_POST['commentDelete']) && is_numeric($_POST['commentDelete']))
 	{
-		$user->delete($db, 'comments', $_POST['commentDelete']);
+		$user->delete($db, 'comments', intval($_POST['commentDelete']));
 		$session->setFlash('successModal', 'Your comment has been successfully removed.');
 		App::redirect($_SERVER['HTTP_REFERER']);
 	}

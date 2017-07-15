@@ -6,10 +6,10 @@ $db = App::getDatabase($pdo);
 $session = Session::getInstance();
 $auth = new Auth($session);
 
-if (isset($_POST['username']) && isset($_POST['pwd']) 
+if (isset($_POST['username']) && isset($_POST['pwd'])
 	&& !empty($_POST) && !empty($_POST['username']) && !empty($_POST['pwd']))
 {
-	$user = $auth->login($db, $_POST['username'], $_POST['pwd'], $_POST['remember']);
+	$user = $auth->login($db, htmlspecialchars($_POST['username']), htmlspecialchars($_POST['pwd']), $_POST['remember']);
 	if (!$user)
 	{
 		$session->setFlash('danger', "Username/Email or password is incorrect");

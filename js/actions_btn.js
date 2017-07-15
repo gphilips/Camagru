@@ -2,24 +2,26 @@
 
 	var miniature = document.getElementsByClassName('miniature'),
 		del = document.getElementsByClassName('delete-mini'),
+		delCom = document.getElementsByClassName('deleteCom-mini'),
+		comments = document.getElementsByClassName('words'),
 		likes = document.getElementsByClassName('like-mini'),
 		active = document.getElementsByClassName('active'),
 		i = -1;
     
     while (++i < miniature.length)
     {
-    	del[i].addEventListener('click', deletePicture);
-    	del[i].addEventListener('mouseover', hoverDeleteBtn);
+    	if (del[i])
+    	{
+    		del[i].addEventListener('click', deletePicture);
+    		del[i].addEventListener('mouseover', hoverDeleteBtn);
+    	}
 	   	likes[i].addEventListener('mouseover', hoverLikeBtn);
 	}
-
-	if (document.getElementsByClassName('deleteCom-mini'))
+	
+	i = -1;
+	while (++i < comments.length)
 	{
-		var comments = document.getElementsByClassName('words'),
-			delCom = document.getElementsByClassName('deleteCom-mini');
-
-		i = -1;
-		while (++i < comments.length)
+		if (delCom[i])
 			delCom[i].addEventListener('click', deleteComment);
 	}
 
@@ -28,7 +30,8 @@
 		if (confirm('Are you sure you want to delete this picture ?'))
 		{
 			var actions = this.parentElement,
-				miniature = actions.previousElementSibling;
+				miniature = (actions.previousElementSibling.querySelector('.miniature')
+							|| actions.previousElementSibling);
 			this.innerHTML = '<form id="deletePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageDelete" value="'+miniature.id+'"></form>';
         	document.getElementById('deletePicture').submit();
 		}

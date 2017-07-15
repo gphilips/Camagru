@@ -7,7 +7,7 @@ $db = App::getDatabase($pdo);
 $session = Session::getInstance();
 $auth = new Auth($session);
 
-if ($auth->confirm($db, $_GET['id'], $_GET['token'], $session))
+if ($auth->confirm($db, intval($_GET['id']), htmlspecialchars($_GET['token']), $session))
 {
 	$session->setFlash('success', "Your account has been successfully confirmed !");
 	App::redirect('/camagru/members/account.php');

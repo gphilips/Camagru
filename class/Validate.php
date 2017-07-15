@@ -7,6 +7,12 @@ class Validate
 
 	public function __construct($post)
 	{
+		foreach ($post as $key => $value) {
+			if (is_numeric($value))
+				$post[$key] = intval($value);
+			else
+				$post[$key] = htmlspecialchars($value);
+		}
 		$this->post = $post;
 	}
 

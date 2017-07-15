@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require 'templates/autoload.php';
 	require_once 'config/setup.php';
 
@@ -25,7 +25,7 @@
 		{
 			$session = Session::getInstance();
 			$auth = new Auth($session);
-			$auth->register($db, $_POST['username'], $_POST['pwd'], $_POST['email']);
+			$auth->register($db, htmlspecialchars($_POST['username']), htmlspecialchars($_POST['pwd']), htmlspecialchars($_POST['email']));
 			
 			$session->setFlash('success', "Your account has been successfully registered ! We have sent you an email confirmation.");
 

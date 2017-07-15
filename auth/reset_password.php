@@ -8,7 +8,7 @@ if (isset($_GET['id']) && isset($_GET['token']))
 	$session = Session::getInstance();
 	$auth = new Auth($session);
 
-	$user = $auth->TokenGetUser($db, $_GET['id'], $_GET['token']);
+	$user = $auth->TokenGetUser($db, intval($_GET['id']), htmlspecialchars($_GET['token']));
 	if ($user)
 	{
 		if (!empty($_POST))
@@ -18,7 +18,7 @@ if (isset($_GET['id']) && isset($_GET['token']))
 			if ($validate->isValid())
 			{
 				$password = hash('whirlpool', $_POST['pwd']);
-				$db->query("UPDATE users SET password = ?, reset_at = NULL, reset_token = NULL WHERE id = ?", [$password, $_GET['id']]);
+				$db->query("UPDATE users SET password = ?, reset_at = NULL, reset_token = NULL WHERE id = ?", [$password, intv($_GET['id']]));
 
 				$session->setFlash('success', "Your password has been changed");
 				$auth->connect($user);

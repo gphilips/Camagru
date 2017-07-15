@@ -11,7 +11,7 @@ require 'templates/header.php';
 		<h2>Reset the password</h2>
 	</div>
 	<div class="login-bloc">
-		<form action="auth/reset_password.php?id=<?= $_GET[id] ?>&token=<?= $_GET[token] ?>" method="POST">
+		<form action="auth/reset_password.php?id=<?= intval($_GET[id]); ?>&token=<?= htmlspecialchars($_GET[token]); ?>" method="POST">
 			<input type="password" name="pwd" placeholder="New password">
 			<input type="password" name="pwd_confirm" placeholder="Confirm the new password">
 			<input type="submit" value="Reset my password">

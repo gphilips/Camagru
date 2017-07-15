@@ -23,7 +23,7 @@ $photos = $user->getMyPhotos($db);
 </div>
 
 <div id="sidebar-title">
-	<h2><?php echo $_SESSION['auth']['username']; ?>'s photos</h2>
+	<h2><?= htmlspecialchars($_SESSION['auth']['username']); ?>'s photos</h2>
 </div>
 <div id="sidebar">
 	<div id="mini-pictures">
@@ -31,15 +31,15 @@ $photos = $user->getMyPhotos($db);
 	if (!empty($photos)) {
 		foreach ($photos as $photo) {
 	?>
-		<img class="miniature" id=<?= $photo['id']; ?> src=<?= $photo['content']; ?> />
+		<img class="miniature" id=<?= intval($photo['id']); ?> src=<?= htmlspecialchars($photo['content']); ?> />
 		<div class="actions">
-			<?php if ($user->verifyMyPhoto($db, $photo['id'])) { ?>
+			<?php if ($user->verifyMyPhoto($db, intval($photo['id']))) { ?>
 				<img class='delete-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />
 			<?php } ?>
 			<img class='like-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/like_inactive.png" alt="like" />
-			<span class='nbLikes'><?= $user->getNbLikes($db, $photo['id']);?></span>
+			<span class='nbLikes'><?= intval($user->getNbLikes($db, $photo['id']));?></span>
 			<img class='comment-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/comments.png" alt="comment" />
-			<span class='nbComments'><?= $user->getNbComments($db, $photo['id']); ?></span>
+			<span class='nbComments'><?= intval($user->getNbComments($db, $photo['id'])); ?></span>
 		</div>
 	<?php }
 	} else { ?>
