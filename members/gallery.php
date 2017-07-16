@@ -40,21 +40,21 @@ require 'scripts/modal.php';
 		</div>
 	<?php }
 	}?>
-
-	<div id="pagination">
-	<?php
-		$page = 0;
-		while (++$page <= $nbPages)
-		{
-			if (intval($page) == $currentPage)
-				echo "<p class='numSelected'>$page</p>";
-			else
-				echo "<p class='numbers'><a href='gallery.php?page=$page'>$page</a></p>";
-		}
-	?>
-	</div>
-
 </div>
+
+<div id="pagination">
+<?php
+	$page = 0;
+	while (++$page <= $nbPages)
+	{
+		if (intval($page) == $currentPage)
+			echo "<p class='numSelected'>$page</p>";
+		else
+			echo "<p class='numbers'><a href='gallery.php?page=$page'>$page</a></p>";
+	}
+?>
+</div>
+
 <script type="text/javascript" src="<?= CAMAGRU_ROOT ?>/js/actions_btn.js"></script>
 <script type="text/javascript" src="<?= CAMAGRU_ROOT ?>/js/modal.js"></script>
 

@@ -437,22 +437,22 @@ span {
     color: #9e9e9e;
 }
 
-#gallery #pagination {
+#pagination {
     text-align: center;
     margin: 1vh 0;
 }
-#gallery #pagination p {
+#pagination p {
     display: inline-block;
 }
-#gallery #pagination .numbers a, #gallery #pagination .numSelected {
+#pagination .numbers a, #pagination .numSelected {
     margin: 0 1vw;
     font-size: 2em;
     color: #6c605e;
 }
-#gallery #pagination .numbers:hover a, #gallery #pagination .numSelected {
+#pagination .numbers:hover a, #pagination .numSelected {
     color: #e74c3c;
 }
-#gallery #pagination .numSelected {
+#pagination .numSelected {
     display: inline-block;
 }
 
@@ -582,6 +582,220 @@ p.words {
 *   MOBILE
 ******************/
 
+
+@media screen and (min-width: 0px) and (max-width: 1100px) {
+    footer {
+        position: relative;
+    }
+
+    /******************
+    *   ACCOUNT PAGE
+    ******************/
+
+    #snap, #object, #sidebar-title, #sidebar {
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    #snap {
+        width: 100%;
+        height: 45%;
+        margin: 0 0 3vh 0;
+    }
+
+    #importImg {
+        width: 90%;
+    }
+    #webcam {
+        width: 100%;
+    }
+    #canvas {
+        width: 90%;
+        height: 100%;
+        margin: 0vh 5vw;
+    }
+    #take {
+        margin: 0;
+        top: 90%;
+    }
+    #closeIcon, #saveIcon {
+        width: 7vw;
+        left: 8%;
+        top: 2%;
+        margin: 0;
+    }
+    #saveIcon {
+        left: 85%;
+    }
+
+
+    #object {
+        width: 92%;
+        margin: 0 3vw;
+    }
+    .imagePng img {
+        width: 10vw;
+        height: 7vh;
+    }
+
+    #sidebar-title, #sidebar {
+        margin: 0 5vw 0 5vw;
+        width: 90%;
+    }
+
+    #sidebar {
+        display: inline-block;
+        margin-bottom: 1vh;
+    }
+    #mini-pictures {
+        display: flex;
+        flex-wrap: wrap-reverse;
+        justify-content: center;
+    }
+    #mini-pictures .miniature {
+        width: 25%;
+        height: 16vh;
+    }
+
+    .mini-icon {
+        width: 4%;
+
+    }
+    #mini-pictures .actions .delete-mini {
+        margin: 3vh 0 0 -5vw;
+        width: 2vw;
+    }
+    #mini-pictures .actions .like-mini {
+        margin: 13vh 0 0 -22vw;
+    }
+    #mini-pictures .actions .comment-mini {
+        margin: 13vh 0% 0% -10vw;
+    }
+    #mini-pictures span.nbLikes {
+        margin: 13vh 0 0 -17vw;
+        font-size: 25px;
+    }
+    #mini-pictures span.nbComments {
+        margin: 13vh 0% 0% -5vw;
+        font-size: 25px;
+    }
+
+    /******************
+    *   GALLERY PAGE
+    ******************/
+
+    .alert-successModal, .alert-dangerModal {
+        position: fixed;
+        left: 30px;
+        top: 8px;
+        text-align: center;
+    }
+
+    #gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    #gallery #search {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+
+    #gallery #search [type='text'] {
+        width: 20%;
+        margin: 0 1vw;
+    }
+
+    #gallery #search [type='submit'] {
+        width: 70px;
+    }
+
+    #gallery .cadre .miniature {
+        width: 24vw;
+        height: 22vw;
+    }
+
+    #gallery .cadre p {
+        font-size: 2vw;
+    }
+
+    #gallery .cadre .actions {
+        display: inline-flex;
+    }
+
+    #gallery .cadre .actions .mini-icon {
+        width: 25%;
+    }
+
+    #gallery .cadre .actions .delete-mini {
+        margin: -23vw 0 0 22vw;
+        width: 15%;
+    }
+
+    #gallery .cadre .actions .like-mini {
+        margin: -1vh 0 0 3vw;
+    }
+
+    #gallery .cadre .actions .comment-mini {
+        margin: -1vh 0 0 19vw;
+    }
+
+    #gallery .cadre .actions span.nbLikes {
+        margin: -3px 0 0 7.5vw;
+        font-size: 3vw;
+    }
+    #gallery .cadre .actions span.nbComments {
+        margin: -3px 0 0 14.5vw;
+        font-size: 3vw;
+    }
+
+
+    #overlay #modal {
+        display: flex;
+        flex-direction: column;
+        overflow: scroll;
+        height: 80vh;
+    }
+
+    #modal #info {
+        position: relative;
+    }
+
+    #modal img {
+        width: 90vw;
+        height: 80vh;
+    }
+
+    #act {
+        margin: 3vh 0 0 0;
+    }
+    #act img {
+        width: 5vw;
+        height: 3vw;
+    }
+
+    #modal #info #comments {
+        width: 84vw;
+        height: 30vh;
+    }
+
+    #comments .deleteCom-mini {
+        width: 5vw;
+        height: 3vw;
+        margin: 0 0 0 57vw;
+    }
+
+    #send-comment input[type='text'] {
+        width: 65vw;
+    }
+
+    #send-comment button[type='submit'] {
+        width: 15vw;
+    }
+}
 
 
 

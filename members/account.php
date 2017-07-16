@@ -36,7 +36,15 @@ $photos = $user->getMyPhotos($db);
 			<?php if ($user->verifyMyPhoto($db, intval($photo['id']))) { ?>
 				<img class='delete-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />
 			<?php } ?>
-			<img class='like-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/like_inactive.png" alt="like" />
+			<?php
+				$action = ($user->getMyLike($db, $photo['id']) == 0) ? 'like' : 'dislike'; ?>
+				<a href="scripts/actions.php?actions=<?= htmlspecialchars($action); ?>&id=<?= intval($photo['id']); ?>">
+				<?php
+					$likeImg = ($action == 'dislike') ? CAMAGRU_ROOT.'/img/like_active.png' : CAMAGRU_ROOT.'/img/like_inactive.png';
+					$active = ($action == 'dislike') ? 'active' : '';
+				?>
+				<img class="<?= $active; ?> like-mini mini-icon" src=<?= htmlspecialchars($likeImg); ?> alt="like"/>
+				</a>
 			<span class='nbLikes'><?= intval($user->getNbLikes($db, $photo['id']));?></span>
 			<img class='comment-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/comments.png" alt="comment" />
 			<span class='nbComments'><?= intval($user->getNbComments($db, $photo['id'])); ?></span>
