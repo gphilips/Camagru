@@ -781,6 +781,11 @@ p.words {
         width: 84vw;
         height: 30vh;
     }
+    
+    #modal #comments #empty {
+        text-align: center;
+        color: #aaa;
+    }
 
     #comments .deleteCom-mini {
         width: 5vw;

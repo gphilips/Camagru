@@ -112,14 +112,13 @@ class Auth
 		setcookie('remember', $user_id.'=='.$remember_token, time() + 60 * 60 * 24 * 7, '/camagru/members/account.php');
 	}
 
-	public function login($db, $username, $password, $remember = false)
+	public function login($db, $username, $password, $remember)
 	{
 		$req = $db->query("SELECT * FROM users WHERE (username = :username OR email = :username) AND confirm_at IS NOT NULL", ['username' => $username]);
 		$user = $req->fetch();
 		if (hash('whirlpool', $password) == $user['password'])
 		{
 			$this->connect($user);
-
 			if ($remember)
 				$this->rememberToken($db, $user['id']);
 

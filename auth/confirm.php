@@ -2,6 +2,13 @@
 require '../templates/autoload.php';
 require_once '../config/setup.php';
 
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['token']) && !isset($_GET['id']))
+{
+	header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
+	Session::getInstance()->setFlash('dangersNav', "You don't have the right to access this file");
+    App::redirect('/camagru/index.php');	
+}
+
 $db = App::getDatabase($pdo);
 
 $session = Session::getInstance();

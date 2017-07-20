@@ -18,7 +18,7 @@ if (isset($_GET['id']) && isset($_GET['token']))
 			if ($validate->isValid())
 			{
 				$password = hash('whirlpool', $_POST['pwd']);
-				$db->query("UPDATE users SET password = ?, reset_at = NULL, reset_token = NULL WHERE id = ?", [$password, intv($_GET['id']]));
+				$db->query("UPDATE users SET password = ?, reset_at = NULL, reset_token = NULL WHERE id = ?", [$password, intval($_GET['id'])]);
 
 				$session->setFlash('success', "Your password has been changed");
 				$auth->connect($user);
@@ -34,6 +34,9 @@ if (isset($_GET['id']) && isset($_GET['token']))
 	}
 }
 else
+{
+	Session::getInstance()->setFlash('dangersNav', "You don't have the right to access this file");
 	App::redirect('../index.php');
+}
 
 ?>

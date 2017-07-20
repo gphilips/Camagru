@@ -1,7 +1,13 @@
 <?php
-$user = new User($_SESSION['auth']['id']);
 
-if ($modal) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME']))
+{
+    header('HTTP/1.0 403 Forbidden', TRUE, 403);
+    header('Location: /camagru/index.php');
+}
+
+if (isset($modal) && $modal) {
+	$user = new User($_SESSION['auth']['id']);
 	$picture = $user->getPhoto($db, $photo_id);
 ?>
 <div id="overlay">
@@ -31,15 +37,20 @@ if ($modal) {
 			<hr>
 			<div id="comments">
 				<?php $comments = $user->getComments($db, intval($picture['id']));
-				foreach ($comments as $comment) { ?>
-					<span class='writer'><strong><?= htmlspecialchars($user->getUsername($db, intval($comment['user_id']))); ?></strong></span>
-					<?php if ($user->verifyMyComment($db, intval($comment['id']))) { ?>
-					<img class='deleteCom-mini' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />
-					<?php } ?>
-					<div class='content'>
-						<p id=<?= intval($comment['id']); ?> class='words'><?= htmlspecialchars($comment['comment']); ?></p>
-					</div>
-					<p class='date'><?= htmlspecialchars(date('M jS Y, H:i', strtotime($comment['created_at']))); ?></p>
+				if (!empty($comments))
+				{
+					foreach ($comments as $comment) { ?>
+						<span class='writer'><strong><?= htmlspecialchars($user->getUsername($db, intval($comment['user_id']))); ?></strong></span>
+						<?php if ($user->verifyMyComment($db, intval($comment['id']))) { ?>
+						<img class='deleteCom-mini' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />
+						<?php } ?>
+						<div class='content'>
+							<p id=<?= intval($comment['id']); ?> class='words'><?= htmlspecialchars($comment['comment']); ?></p>
+						</div>
+						<p class='date'><?= htmlspecialchars(date('M jS Y, H:i', strtotime($comment['created_at']))); ?></p>
+					<?php }
+				} else { ?>
+					<p id='empty'>There is no comment yet</p>
 				<?php } ?>
 			</div>
 			<form action="scripts/actions.php" method="POST" id="send-comment">
