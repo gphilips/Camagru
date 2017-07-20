@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['username']) && !isset($_GET['actions']) && !isset($_GET['id']))
 {
-	header( 'HTTP/1.0 403 Forbidden', TRUE, 403 );
+	header('HTTP/1.0 403 Forbidden', TRUE, 403);
 	Session::getInstance()->setFlash('dangersNav', "You don't have the right to access this file");
     App::redirect('/camagru/index.php');	
 }
@@ -30,6 +30,7 @@ if ($_POST)
 	}
 	else if (isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['send']) && !empty($_POST['send']) && is_numeric($_POST['send']))
 	{
+		$user->alertComment($db, intval($_POST['send']), htmlspecialchars($_POST['content']));
 		$user->setComment($db, htmlspecialchars($_POST['content']), intval($_POST['send']));
 		$session->setFlash('successModal', 'Your comment has been successfully sent.');
 		App::redirect($_SERVER['HTTP_REFERER']);
