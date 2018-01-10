@@ -26,7 +26,7 @@ class Validate
 
 	public function isAlphanum($input, $flashError)
 	{
-		if (!preg_match('/^([a-zA-Z0-9_]){8,}$/', $this->getInput($input)))
+		if (!preg_match('/^[a-zA-Z0-9]{8,}$/', $this->getInput($input)))
 			$this->errors[$input] = $flashError;
 	}
 
@@ -59,8 +59,6 @@ class Validate
 		if (empty($value) || $value != $this->getInput($input.'_confirm'))
 			$this->errors[$input] = $flashError;
 	}
-
-
 
 	public function isValid()
 	{

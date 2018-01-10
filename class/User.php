@@ -8,6 +8,12 @@ class User
 		$this->user_id = $user_id;
 	}
 
+	public function getUser($db, $user_id)
+	{
+		$user = $db->query('SELECT * FROM users WHERE id = ?', [$user_id])->fetch();
+		return $user;
+	}
+
 	public function getUsername($db, $user_id)
 	{
 		$username = $db->query('SELECT username FROM users WHERE id = ?', [$user_id])->fetchColumn();
@@ -114,11 +120,11 @@ class User
 
 	public function alertComment($db, $photo_id, $content)
 	{
-		$username = $db->query('SELECT username FROM users WHERE id = ?', [$this->user_id])->fetchColumn();
+		$username = $this->getUsername($db, $this->user_id);
 		$owner_id = $db->query('SELECT user_id FROM photos WHERE id = ?', [$photo_id])->fetchColumn();
 		if ($owner_id > 0)
-			$owner_email = $db->query('SELECT email FROM users WHERE id = ?', [$owner_id])->fetchColumn();
-		if ($username && $owner_email)
+			$owner = $this->getUser($db, $owner_id);
+		if ($username && $owner['email'] && $owner['receiveMail'])
 		{
 			$subject = "New comment on your photo";
 			$link = "http://localhost:$_SERVER[SERVER_PORT]/camagru/members/gallery.php?id=$photo_id";
@@ -140,12 +146,18 @@ class User
 	 		$headers .= "From: Camagru <no-reply@camagru.com>" . "\r\n";
 	 		$headers .=  "Reply-To: gphilips@student.42.fr" . "\r\n";
 
-			mail($owner_email, $subject, $message, $headers);
+			mail($owner['email'], $subject, $message, $headers);
 
 			return $user;
 		} 
 		else
 			return false;
+	}
+
+	public function getReceiveMail($db, $user_id)
+	{
+		$user = $this->getUser($db, $user_id);
+		return ($user) ? $user['receiveMail'] : NULL;
 	}
 }
 ?>

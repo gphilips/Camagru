@@ -9,6 +9,13 @@ class Auth
 		$this->session = $session;
 	}
 
+	private function getUserById($db, $user_id)
+	{
+		$req = $db->query('SELECT * FROM users WHERE id = ?',[$user_id]);
+		$user = $req->fetch();
+		return $user;
+	}
+
 	public function register($db, $username, $password, $email)
 	{
 		$password = hash('whirlpool', $password);	
@@ -43,8 +50,7 @@ class Auth
 
 	public function confirm($db, $user_id, $user_token, $session)
 	{
-		$req = $db->query('SELECT * FROM users WHERE id = ?',[$user_id]);
-		$user = $req->fetch();
+		$user = $this->getUserById($db, $user_id);
 
 		if ($user && $user['confirm_token'] == $user_token)
 		{
@@ -85,9 +91,8 @@ class Auth
 			$remember_token = $_COOKIE['remember'];
 			$parts = explode('==', $remember_token);
 			$user_id = $parts[0];
-			$req = $db->query("SELECT * FROM users WHERE id = ?", [$user_id]);
-			$user = $req->fetch();
-			
+			$user = $this->getUserById($db, $user_id);
+
 			if ($user)
 			{
 				$result = $user_id.'=='.$user['remember_token'];
@@ -108,7 +113,7 @@ class Auth
 	public function rememberToken($db, $user_id)
 	{
 		$remember_token = bin2hex(random_bytes(50));
-		$req = $db->query("UPDATE users SET remember_token = ? WHERE id = ?",[$remember_token, $user_id]);
+		$db->query("UPDATE users SET remember_token = ? WHERE id = ?",[$remember_token, $user_id]);
 		setcookie('remember', $user_id.'=='.$remember_token, time() + 60 * 60 * 24 * 7, '/camagru/members/account.php');
 	}
 
@@ -157,8 +162,7 @@ class Auth
 	 		$headers .= "From: Camagru <no-reply@camagru.com>" . "\r\n";
 	 		$headers .=  "Reply-To: gphilips@student.42.fr" . "\r\n";
 
-			mail($_POST['email'], $subject, $message, $headers);
-
+			mail($email, $subject, $message, $headers);
 			return $user;
 		} 
 		else
@@ -170,6 +174,18 @@ class Auth
 		$req = $db->query("SELECT * FROM users WHERE id = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)", [$user_id, $user_token]);
 		$user = $req->fetch();
 		return $user;
+	}
+
+	public function changeField($db, $user_id, $field, $newState)
+	{
+		$user = $this->getUserById($db, $user_id);
+
+		if ($user)
+		{
+			$db->query("UPDATE users SET $field = ? WHERE id = ?",[$newState, $user_id]);
+			return true;
+		}
+		return false;
 	}
 }
 

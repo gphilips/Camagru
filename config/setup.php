@@ -31,14 +31,15 @@ if ($userTable != 'users')
 		  `confirm_at` datetime DEFAULT NULL,
 		  `reset_token` varchar(255) DEFAULT NULL,
 		  `reset_at` datetime DEFAULT NULL,
-		  `remember_token` varchar(255) DEFAULT NULL
+		  `remember_token` varchar(255) DEFAULT NULL,
+		  `receiveMail` tinyint(1) NOT NULL DEFAULT 1
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		';
 
 	$pdo->exec($sql);
 
-	$sql = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `confirm_token`, `confirm_at`, `reset_token`, `reset_at`, `remember_token`) VALUES
-(1, 'gphilips', 'greg.philips08@gmail.com', '1480baeda2ae0cb462acf86488798d105a940859d0818c91ca73454ed89fd8ab64f02d1a4cb7480419f2349a5502d0ec15a029b22bb61608c4b7d0e83a86026a', NULL, '2017-06-29 02:54:48', '961495dc4adb04fb01ddd62b786f08cdc74fdcfbfb6668331c', '2017-07-01 01:54:50', '45f2a17dc3f4ecf0c7f96743ae340667f1b8616ad4ecf9892d');";
+	$sql = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `confirm_token`, `confirm_at`, `reset_token`, `reset_at`, `remember_token`, `receiveMail`) VALUES
+(1, 'gphilips', 'greg.philips08@gmail.com', '1480baeda2ae0cb462acf86488798d105a940859d0818c91ca73454ed89fd8ab64f02d1a4cb7480419f2349a5502d0ec15a029b22bb61608c4b7d0e83a86026a', NULL, '2017-06-29 02:54:48', '961495dc4adb04fb01ddd62b786f08cdc74fdcfbfb6668331c', '2017-07-01 01:54:50', '45f2a17dc3f4ecf0c7f96743ae340667f1b8616ad4ecf9892d', 1);";
 
 	$pdo->exec($sql);
 

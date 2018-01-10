@@ -800,6 +800,22 @@ p.words {
     #send-comment button[type='submit'] {
         width: 15vw;
     }
+
+    /******************
+    *   SETTINGS PAGE
+    ******************/
+
+    #settings {
+        text-align: center; 
+    }
+
+    #receiveMail form {
+        display: inline-block;
+        width: 2vw;
+        height: 4vh;
+        border-radius: 10px;
+    }
+
 }
 
 

@@ -23,7 +23,7 @@ $photos = $user->getMyPhotos($db);
 </div>
 
 <div id="sidebar-title">
-	<h2><?= htmlspecialchars($_SESSION['auth']['username']); ?>'s photos</h2>
+	<h2><?= htmlspecialchars($user->getUsername($db, $_SESSION['auth']['id'])); ?>'s photos</h2>
 </div>
 <div id="sidebar">
 	<div id="mini-pictures">

@@ -9,12 +9,14 @@ if (isset($_GET['id']) && isset($_GET['token']))
 	$auth = new Auth($session);
 
 	$user = $auth->TokenGetUser($db, intval($_GET['id']), htmlspecialchars($_GET['token']));
+
 	if ($user)
 	{
 		if (!empty($_POST))
 		{
 			$validate = new Validate($_POST);
 			$validate->isConfirmed('pwd', "You didn't set your password two times");
+			$validate->isPassword('pwd', "Your password is not valid (8 characters minimum)");
 			if ($validate->isValid())
 			{
 				$password = hash('whirlpool', $_POST['pwd']);
@@ -24,6 +26,11 @@ if (isset($_GET['id']) && isset($_GET['token']))
 				$auth->connect($user);
 
 				App::redirect('../index.php');
+			}
+			else
+			{
+				$session->setFlash('danger', implode("\n", $validate->getErrors()));
+				App::redirect('../members/settings.php');	
 			}
 		}
 	}

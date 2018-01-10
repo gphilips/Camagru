@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['username']) && !isset($_GET['actions']) && !isset($_GET['id']))
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['username']) && !isset($_GET['actions']) && !isset($_GET['id']) && !isset($_GET['receiveMail']))
 {
 	header('HTTP/1.0 403 Forbidden', TRUE, 403);
 	Session::getInstance()->setFlash('dangersNav', "You don't have the right to access this file");
@@ -11,6 +11,7 @@ require_once '../../config/setup.php';
 
 $session = Session::getInstance();
 $db = App::getDatabase($pdo);
+$auth = new Auth($session);
 
 $user = new User($_SESSION['auth']['id']);
 
@@ -41,6 +42,28 @@ if ($_POST)
 		$session->setFlash('successModal', 'Your comment has been successfully removed.');
 		App::redirect($_SERVER['HTTP_REFERER']);
 	}
+	else if (isset($_POST['username']))
+	{
+		$validate = new Validate($_POST);
+
+		$validate->isAlphanum('username', "Your username is not valid (8 alphanumeric characters minimum)");
+		$validate->isUnique('username', $db, 'users', "Your username is already taken");
+		if ($validate->isValid())
+		{
+			$success = $auth->changeField($db, $_SESSION['auth']['id'], 'username', $_POST['username']);
+			if ($success)
+				$session->setFlash('success', "Your username has been changed");
+		}
+		else
+			$session->setFlash('danger', implode("\n", $validate->getErrors()));
+		App::redirect($_SERVER['HTTP_REFERER']);
+	}
+	else if (isset($_POST['resetPwd']))
+	{
+		$user = $auth->resetPassword($db, $_SESSION['auth']['email']);
+		$session->setFlash('success', "We sent you an email to reset your password");
+		App::redirect($_SERVER['HTTP_REFERER']);
+	}
 	else
 	{
 		$session->setFlash('dangerNav', 'Sorry, your request has failed.');
@@ -64,6 +87,7 @@ else if ($_GET)
 	else if (isset($_GET['username']) && !empty($_GET['username']))
 	{
 		$validate = new Validate($_GET);
+
 		if ($user_id = $validate->isUnique('username', $db, 'users'))
 		{
 			$name = $user->getUsername($db, $user_id);
@@ -71,7 +95,7 @@ else if ($_GET)
 			if ($nbPhoto > 0)
 				$session->setFlash('successNav', "We found $name"."'s photos");
 			else
-				$session->setFlash('dangersNav', "Sorry, there is no photos yet of $name");
+				$session->setFlash('dangersNav', "Sorry, there is no photos of $name yet");
 			App::redirect("../gallery.php?search=$user_id");
 		}
 		else
@@ -80,6 +104,17 @@ else if ($_GET)
 			App::redirect('../gallery.php');
 		}
 
+	}
+	else if (isset($_GET['receiveMail']))
+	{
+		$onOff = ($_GET['receiveMail'] == 0) ? 0 : 1;
+		print_r($_GET['receiveMail']);
+		$success = $auth->changeField($db, $_SESSION['auth']['id'], 'receiveMail', $onOff);
+		if ($success != NULL)
+			$session->setFlash('success', "Your change has been made");
+		else
+			$session->setFlash('danger', "Sorry, but your change hasn't been made. Try again");
+		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else
 		App::redirect('../gallery.php');

@@ -34,6 +34,9 @@ if (dirname($_SERVER['PHP_SELF']) == '/camagru/members')
 						<a href="<?= CAMAGRU_ROOT ?>/members/gallery.php">Gallery</a>
 					</li>
 					<li>
+						<a href="<?= CAMAGRU_ROOT ?>/members/settings.php">Settings</a>
+					</li>
+					<li>
 						<a href="<?= CAMAGRU_ROOT ?>/templates/logout.php">Log out</a>
 					</li>
 				<?php } else { ?>
