@@ -28,6 +28,8 @@ if (isset($_POST['username']) && isset($_POST['pwd'])
 	if (!$user['confirm_at'] || $user['confirm_token'])
 			$auth->restrict();
 }
+else if ($_SERVER['PHP_SELF'] == '/camagru/members/gallery.php')
+	$auth->loginVisitor($db);
 else
 	$auth->restrict();
 

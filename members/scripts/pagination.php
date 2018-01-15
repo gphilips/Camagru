@@ -5,7 +5,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && realpath(__FILE__) == realpath($_SERV
     header('Location: /camagru/index.php');	
 }
 
-$user = new User($_SESSION['auth']['id']);
+$getId = (isset($_SESSION['auth']['id'])) ? $_SESSION['auth']['id'] : $_SESSION['no-auth']['id'];
+
+$user = new User($getId);
 
 $nbPhotos = 12;
 $nbPages = ceil($user->nbPhotoOfAllUsers($db) / $nbPhotos);

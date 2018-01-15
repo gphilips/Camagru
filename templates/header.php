@@ -29,10 +29,11 @@ if (dirname($_SERVER['PHP_SELF']) == '/camagru/members')
 				<a href="<?= CAMAGRU_ROOT ?>/index.php"><img src="<?= CAMAGRU_ROOT ?>/img/logo-camagru.png" alt="logo-camagru"></a>
 			</div>
 			<div id="links">
+				<li>
+					<a href="<?= CAMAGRU_ROOT ?>/members/gallery.php">Gallery</a>
+				</li>
 				<?php if ($session->read_session('auth')) { ?>
-					<li>
-						<a href="<?= CAMAGRU_ROOT ?>/members/gallery.php">Gallery</a>
-					</li>
+
 					<li>
 						<a href="<?= CAMAGRU_ROOT ?>/members/settings.php">Settings</a>
 					</li>

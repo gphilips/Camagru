@@ -74,9 +74,8 @@ class Auth
 
 	public function isConnected()
 	{
-		if (!$this->session->read_session('auth'))
-			return false;
-		return $this->session->read_session('auth');
+		$isAuth = $this->session->read_session('auth');
+		return (!$isAuth) ? false : $isAuth;
 	}
 
 	public function connect($user)
@@ -131,6 +130,13 @@ class Auth
 		}
 		else
 			return false;
+	}
+
+	public function loginVisitor($db)
+	{
+		$req = $db->query("SELECT * FROM users WHERE username = :username", ['username' => 'visitor']);
+		$user = $req->fetch();
+		$this->session->write_session('no-auth', $user);
 	}
 
 	public function resetPassword($db, $email)

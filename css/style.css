@@ -52,6 +52,7 @@ form input[type] {
     color: #4d4d4d;
     font-size: 15px;
 }
+
 form input[type='submit'] {
     width: 42vw;
     height: 35px;
@@ -59,6 +60,11 @@ form input[type='submit'] {
     border: none;
     color: #fff;
     background-color: #e74c3c;
+}
+
+form input[type="checkbox"] {
+    width: 3vw;
+    margin: 0vh 4vw;
 }
 
 a {
@@ -576,7 +582,35 @@ p.words {
     background-color: rgba(231, 100, 87, 0.8);
 }
 
+ /******************
+ *   SETTINGS PAGE
+ ******************/
 
+#settings {
+    text-align: center;
+    color: #403f3f;
+    padding: 0vh 20vw;
+}
+
+form #receivedMail {
+    display: inline-block;
+    width: 2vw;
+    height: 4vh;
+    border-radius: 10px;
+}
+
+#receivedMail input {
+    width: 5vw;
+}
+
+input[type='submit']:hover {
+    background-color: #e74c3cb8;
+}
+
+form input.btnActivate {
+    background-color: transparent;
+    border: 2px solid #e2e2e2b0;
+}
 
 /******************
 *   MOBILE
@@ -584,6 +618,7 @@ p.words {
 
 
 @media screen and (min-width: 0px) and (max-width: 1100px) {
+    
     footer {
         position: relative;
     }
@@ -801,21 +836,14 @@ p.words {
         width: 15vw;
     }
 
-    /******************
-    *   SETTINGS PAGE
-    ******************/
+     /******************
+     *   SETTINGS PAGE
+     ******************/
 
-    #settings {
-        text-align: center; 
+    #receivedMail input {
+        width: 10vw;
+        margin: 3vh 18vw;
     }
-
-    #receiveMail form {
-        display: inline-block;
-        width: 2vw;
-        height: 4vh;
-        border-radius: 10px;
-    }
-
 }
 
 

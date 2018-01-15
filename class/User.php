@@ -147,11 +147,7 @@ class User
 	 		$headers .=  "Reply-To: gphilips@student.42.fr" . "\r\n";
 
 			mail($owner['email'], $subject, $message, $headers);
-
-			return $user;
 		} 
-		else
-			return false;
 	}
 
 	public function getReceiveMail($db, $user_id)

@@ -1,9 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['username']) && !isset($_GET['actions']) && !isset($_GET['id']) && !isset($_GET['receiveMail']))
 {
-	header('HTTP/1.0 403 Forbidden', TRUE, 403);
-	Session::getInstance()->setFlash('dangersNav', "You don't have the right to access this file");
-    App::redirect('/camagru/index.php');	
+    header('HTTP/1.0 403 Forbidden', TRUE, 403);
+    header('Location: /camagru/index.php');	
 }
 
 require '../../templates/autoload.php';
@@ -13,7 +12,8 @@ $session = Session::getInstance();
 $db = App::getDatabase($pdo);
 $auth = new Auth($session);
 
-$user = new User($_SESSION['auth']['id']);
+$getId = (isset($_SESSION['auth']['id'])) ? $_SESSION['auth']['id'] : $_SESSION['no-auth']['id'];
+$user = new User($getId);
 
 if ($_POST)
 {
@@ -31,10 +31,18 @@ if ($_POST)
 	}
 	else if (isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['send']) && !empty($_POST['send']) && is_numeric($_POST['send']))
 	{
-		$user->alertComment($db, intval($_POST['send']), htmlspecialchars($_POST['content']));
-		$user->setComment($db, htmlspecialchars($_POST['content']), intval($_POST['send']));
-		$session->setFlash('successModal', 'Your comment has been successfully sent.');
-		App::redirect($_SERVER['HTTP_REFERER']);
+		if (isset($_SESSION['auth']))
+		{
+			$user->alertComment($db, intval($_POST['send']), htmlspecialchars($_POST['content']));
+			$user->setComment($db, htmlspecialchars($_POST['content']), intval($_POST['send']));
+			$session->setFlash('successModal', 'Your comment has been successfully sent.');
+			App::redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$session->setFlash('danger', 'Sorry, but you have to create an account.');
+			App::redirect('../../register.php');
+		}
 	}
 	else if (isset($_POST['commentDelete']) && !empty($_POST['commentDelete']) && is_numeric($_POST['commentDelete']))
 	{
@@ -77,12 +85,20 @@ else if ($_GET)
 {
 	if (isset($_GET['actions']) && !empty($_GET['actions']) && isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id']))
 	{
-		if ($_GET['actions'] == 'like')
-			$user->setLike($db, $_GET['id']);
-		else if ($_GET['actions'] == 'dislike')
-			$user->deleteLike($db, $_GET['id']);
+		if (isset($_SESSION['auth']))
+		{		
+			if ($_GET['actions'] == 'like')
+				$user->setLike($db, $_GET['id']);
+			else if ($_GET['actions'] == 'dislike')
+				$user->deleteLike($db, $_GET['id']);
 
-		App::redirect($_SERVER['HTTP_REFERER']);
+			App::redirect($_SERVER['HTTP_REFERER']);
+		}
+		else
+		{
+			$session->setFlash('danger', 'Sorry, but you have to create an account.');
+			App::redirect('../../register.php');
+		}
 	}
 	else if (isset($_GET['username']) && !empty($_GET['username']))
 	{
@@ -107,8 +123,7 @@ else if ($_GET)
 	}
 	else if (isset($_GET['receiveMail']))
 	{
-		$onOff = ($_GET['receiveMail'] == 0) ? 0 : 1;
-		print_r($_GET['receiveMail']);
+		$onOff = ($_GET['receiveMail'] == 'On') ? 1 : 0;
 		$success = $auth->changeField($db, $_SESSION['auth']['id'], 'receiveMail', $onOff);
 		if ($success != NULL)
 			$session->setFlash('success', "Your change has been made");
