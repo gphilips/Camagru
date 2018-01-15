@@ -124,7 +124,7 @@ class User
 		$owner_id = $db->query('SELECT user_id FROM photos WHERE id = ?', [$photo_id])->fetchColumn();
 		if ($owner_id > 0)
 			$owner = $this->getUser($db, $owner_id);
-		if ($username && $owner['email'] && $owner['receiveMail'])
+		if ($username && $owner['email'] && $owner['receiveMail'] == 1)
 		{
 			$subject = "New comment on your photo";
 			$link = "http://localhost:$_SERVER[SERVER_PORT]/camagru/members/gallery.php?id=$photo_id";

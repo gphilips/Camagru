@@ -123,7 +123,7 @@ else if ($_GET)
 	}
 	else if (isset($_GET['receiveMail']))
 	{
-		$onOff = ($_GET['receiveMail'] == 'On') ? 1 : 0;
+		$onOff = (htmlspecialchars($_GET['receiveMail']) == 'On') ? 1 : 0;
 		$success = $auth->changeField($db, $_SESSION['auth']['id'], 'receiveMail', $onOff);
 		if ($success != NULL)
 			$session->setFlash('success', "Your change has been made");
