@@ -183,8 +183,19 @@
 			saveIcon.addEventListener('click', function()
 			{
 				var data = canvas.toDataURL('image/png');
+				this.style.visibility='hidden';
 				this.innerHTML = '<form id="savePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
         		document.getElementById('savePicture').submit();
+
+			// 	var xhr = new XMLHttpRequest();
+			// 	xhr.onreadystatechange = function() {
+			// 		if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+			// 			alert(xhr.responseText); // C'est bon \o/
+			// 		}
+			// 	};
+			// 	xhr.open("POST", "../members/scripts/actions.php", true);
+			// 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			// 	xhr.send('imageTaken=' + data);
 			});
 		}
 	}

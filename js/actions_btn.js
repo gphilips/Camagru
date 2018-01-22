@@ -32,6 +32,7 @@
 			var actions = this.parentElement,
 				miniature = (actions.previousElementSibling.querySelector('.miniature')
 							|| actions.previousElementSibling);
+			this.style.visibility='hidden';
 			this.innerHTML = '<form id="deletePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageDelete" value="'+miniature.id+'"></form>';
         	document.getElementById('deletePicture').submit();
 		}
@@ -42,6 +43,7 @@
 		if (confirm('Are you sure you want to delete this comment ?'))
 		{
 			var comment = this.nextElementSibling.querySelector('p');
+			this.style.visibility='hidden';
 			this.innerHTML = '<form id="deleteComment" action="scripts/actions.php" method="POST"><input type="hidden" name="commentDelete" value="'+comment.id+'"></form>';
         	document.getElementById('deleteComment').submit();
 		}
