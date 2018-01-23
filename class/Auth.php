@@ -111,7 +111,7 @@ class Auth
 
 	public function rememberToken($db, $user_id)
 	{
-		$remember_token = bin2hex(random_bytes(50));
+		$remember_token = bin2hex(rand(0, 50));
 		$db->query("UPDATE users SET remember_token = ? WHERE id = ?",[$remember_token, $user_id]);
 		setcookie('remember', $user_id.'=='.$remember_token, time() + 60 * 60 * 24 * 7, '/camagru/members/account.php');
 	}
@@ -165,7 +165,7 @@ class Auth
 
 			$headers  = "MIME-Version: 1.0" . "\r\n";
 	 		$headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
-	 		$headers .= "From: Camagru <no-reply@camagru.com>" . "\r\n";
+	 		//$headers .= "From: Camagru <no-reply@camagru.com>" . "\r\n";
 	 		$headers .=  "Reply-To: gphilips@student.42.fr" . "\r\n";
 
 			mail($email, $subject, $message, $headers);
