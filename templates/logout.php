@@ -14,8 +14,5 @@ $session->delete_session('auth');
 
 $session->setFlash('success', "You are now logged out");
 
-if (!$auth->isConnected())
-{
-	App::redirect('/camagru/index.php');
-}
+App::redirect('/camagru/index.php');
 ?>

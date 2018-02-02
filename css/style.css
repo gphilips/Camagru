@@ -9,10 +9,6 @@ body, html {
     font-size: 16px;
 }
 
-#bg {
-    background: linear-gradient(to left, #e74c3c , #FFB88C);
-}
-
 nav {
     width: 100%;
     padding: 0px;
@@ -401,8 +397,8 @@ span {
     width: 5vw;
     font-size: 13px;
     border-radius: 5px;
-    border: 2px solid #dcdcdc;
-    color: #fff;
+    border: 2px solid #e8604f;
+    color: #e8604f;
     background-color: rgba(231, 76, 60, 0);
 }
 
@@ -603,12 +599,13 @@ form #receivedMail {
 }
 
 input[type='submit']:hover {
-    background-color: #e74c3cb8;
+    background-color: #f4f4f4;
 }
 
 form input.btnActivate {
     background-color: transparent;
-    border: 2px solid #e2e2e2b0;
+    border: 2px solid #e8604f;
+    color: #e8604f;
 }
 
 /******************

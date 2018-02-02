@@ -16,7 +16,17 @@ $db = App::getDatabase($pdo);
 
 $auth->cookieAutoConnect($db);
 
-if ($auth->isConnected())
- 	App::redirect('members/account.php');
+if (!$auth->isConnected($db))
+{
+	if (isset($_COOKIE['remember']))
+	{
+		unset($_COOKIE['remember']);
+		setcookie('remember', '', time()-3600, '/');
+	}
+
+	$session->delete_session('auth');
+}
+else
+	App::redirect('members/account.php');
 
 ?>

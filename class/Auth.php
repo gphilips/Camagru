@@ -72,10 +72,11 @@ class Auth
 		}
 	}
 
-	public function isConnected()
+	public function isConnected($db)
 	{
 		$isAuth = $this->session->read_session('auth');
-		return (!$isAuth) ? false : $isAuth;
+		$user = $this->getUserById($db, $isAuth['id']);
+		return ($user ? true : false);
 	}
 
 	public function connect($user)
