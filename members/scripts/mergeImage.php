@@ -4,7 +4,7 @@
 // {
 // 	print_r($_POST[$imgData]);
 // }
-echo 'OK';
+
 function mergeImage($source, $filter)
 {
 	$imgSource = imagecreatefrompng($source);

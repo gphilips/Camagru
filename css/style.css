@@ -736,7 +736,7 @@ form input.btnActivate {
     }
 
     #gallery #search [type='text'] {
-        width: 20%;
+        width: 65vw;
         margin: 0 1vw;
     }
 
@@ -842,7 +842,20 @@ form input.btnActivate {
     }
 }
 
+@media screen and (min-width: 2260px) {
+    #mini-pictures span.nbComments {
+        margin: 14% 0% 0% -15%;
+    }
 
+    #mini-pictures span.nbLikes {
+        margin: 14% 0 0 -25%;
+    }
 
+    .like-mini {
+        margin: 14% 0% 0% -29%;
+    }
 
-
+    .comment-mini {
+        margin: 14% 0% 0% -19%;
+    }
+}

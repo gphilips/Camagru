@@ -134,26 +134,43 @@
 	    }
 	}
 	
-	function addPng()
-	{
-		var	canvas = document.getElementById('canvas');
-			y1 = canvas.height,
-			y2 = canvas.height,
-			x1 = canvas.width,
-			x2 = canvas.width;
+	// function addPng()
+	// {
+	// 	var	canvas = document.getElementById('canvas');
+	// 		y1 = canvas.height,
+	// 		y2 = canvas.height,
+	// 		x1 = canvas.width,
+	// 		x2 = canvas.width;
 
+	// 	if (imagePngName == 'snapback')
+	// 		canvas.getContext('2d').drawImage(snapback, x1 - (x1 / 1.43), 0, x2 - (x2 / 1.70), y2 - (y2 / 1.88));
+	// 	else if (imagePngName == 'gangsta')
+	// 		canvas.getContext('2d').drawImage(gangsta, 0, 0, x2, y2);
+	// 	else if (imagePngName == 'lol')
+	// 		canvas.getContext('2d').drawImage(lol, x1 / 3, y1 - (y1 / 1.05), x2 / 1.73, y2 / 1.71);
+	// 	else if (imagePngName == 'batman')
+	// 		canvas.getContext('2d').drawImage(batman, x1 - (x1 / 1.30), 0, x2 - (x2 / 2.50), y2 / 1.66);
+	// 	else if (imagePngName == 'boss')
+	// 		canvas.getContext('2d').drawImage(boss, x1 - (x1 / 1.25), y1 - (y1 / 2.10), x2 - (x2 / 2.35), y2 - (y2 / 3));
+	// 	else if (imagePngName == 'chain')
+	// 		canvas.getContext('2d').drawImage(chain, x1 - (x1 / 1.3), y1 - (y1 / 2), x2 - (x2 / 2.5), y2);
+	// }
+
+	function selectFilter()
+	{
 		if (imagePngName == 'snapback')
-			canvas.getContext('2d').drawImage(snapback, x1 - (x1 / 1.43), 0, x2 - (x2 / 1.70), y2 - (y2 / 1.88));
+			filter = 0;
 		else if (imagePngName == 'gangsta')
-			canvas.getContext('2d').drawImage(gangsta, 0, 0, x2, y2);
+			filter = 1;
 		else if (imagePngName == 'lol')
-			canvas.getContext('2d').drawImage(lol, x1 / 3, y1 - (y1 / 1.05), x2 / 1.73, y2 / 1.71);
+			filter = 2;
 		else if (imagePngName == 'batman')
-			canvas.getContext('2d').drawImage(batman, x1 - (x1 / 1.30), 0, x2 - (x2 / 2.50), y2 / 1.66);
+			filter = 3;
 		else if (imagePngName == 'boss')
-			canvas.getContext('2d').drawImage(boss, x1 - (x1 / 1.25), y1 - (y1 / 2.10), x2 - (x2 / 2.35), y2 - (y2 / 3));
+			filter = 4;
 		else if (imagePngName == 'chain')
-			canvas.getContext('2d').drawImage(chain, x1 - (x1 / 1.3), y1 - (y1 / 2), x2 - (x2 / 2.5), y2);
+			filter = 5;
+		return (filter);
 	}
 
 	function takePicture()
@@ -170,7 +187,8 @@
 			importImg.style.visibility = 'hidden';
 			canvas.style.visibility = 'visible';
 		}
-		addPng(imagePngName);
+		//addPng(imagePngName);
+		var filterNumber = selectFilter(imagePngName);
 		if (closeIconCreated == 0 && saveIconCreated == 0)
 		{
 			closeIcon = createCloseIcon();
@@ -183,24 +201,12 @@
 			saveIcon.addEventListener('click', function()
 			{
 				var data = canvas.toDataURL('image/png');
-				var xhr;
-				// this.style.visibility='hidden';
-				// this.innerHTML = '<form id="savePicture" action="scripts/actions.php" method="POST"><input type="hidden" name="imageTaken" value="'+data+'"></form>';
-    //     		document.getElementById('savePicture').submit();
-
-				if (window.XMLHttpRequest) {
-				  xhr = new XMLHttpRequest();
-				}
-				else if (window.ActiveXObject) {
-				  xhr = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-
-				xhr.open("POST", "../members/scripts/mergeImage.php", false);
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xhr.onreadystatechange = function() {
-				  console.log('OK');
-				}
-				xhr.send("imgData=" + data);
+				this.style.visibility='hidden';
+				this.innerHTML = `<form id="savePicture" action="scripts/actions.php" method="POST">
+									<input type="hidden" name="imageTaken" value="`+ data +`">
+									<input type="hidden" name="selectFilter" value="`+ filterNumber +`">
+								  </form>`;
+        		document.getElementById('savePicture').submit();
 			});
 		}
 	}

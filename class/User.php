@@ -22,12 +22,16 @@ class User
 
 	public function setLike($db, $photo_id)
 	{
-		$db->query('INSERT INTO likes SET user_id = ?, photo_id = ?', [$this->user_id, $photo_id]);
+		$photo = $this->getPhoto($db, $photo_id);
+		if ($photo)
+			$db->query('INSERT INTO likes SET user_id = ?, photo_id = ?', [$this->user_id, $photo_id]);
 	}
 
 	public function deleteLike($db, $photo_id)
 	{
-		$req = $db->query("DELETE FROM likes WHERE user_id = ? AND photo_id = ?", [$this->user_id, $photo_id]);
+		$photo = $this->getPhoto($db, $photo_id);
+		if ($photo)
+			$req = $db->query("DELETE FROM likes WHERE user_id = ? AND photo_id = ?", [$this->user_id, $photo_id]);
 	}
 
 	public function getMyLike($db, $photo_id)
