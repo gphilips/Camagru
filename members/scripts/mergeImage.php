@@ -1,12 +1,10 @@
 <?php
 
-// if (isset($_POST[$imgData]) && !empty(isset($_POST[$imgData])))
-// {
-// 	print_r($_POST[$imgData]);
-// }
-
 function mergeImage($source, $filter)
 {
+	print_r($filter);
+	print_r($source);
+	exit();
 	$imgSource = imagecreatefrompng($source);
 	$imgFilter = imagecreatefrompng($filter);
 

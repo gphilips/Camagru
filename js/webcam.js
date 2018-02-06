@@ -134,43 +134,54 @@
 	    }
 	}
 	
-	// function addPng()
-	// {
-	// 	var	canvas = document.getElementById('canvas');
-	// 		y1 = canvas.height,
-	// 		y2 = canvas.height,
-	// 		x1 = canvas.width,
-	// 		x2 = canvas.width;
+	function addPng()
+	{
+		var	canvas = document.getElementById('canvas');
+			y1 = canvas.height,
+			y2 = canvas.height,
+			x1 = canvas.width,
+			x2 = canvas.width;
 
-	// 	if (imagePngName == 'snapback')
-	// 		canvas.getContext('2d').drawImage(snapback, x1 - (x1 / 1.43), 0, x2 - (x2 / 1.70), y2 - (y2 / 1.88));
-	// 	else if (imagePngName == 'gangsta')
-	// 		canvas.getContext('2d').drawImage(gangsta, 0, 0, x2, y2);
-	// 	else if (imagePngName == 'lol')
-	// 		canvas.getContext('2d').drawImage(lol, x1 / 3, y1 - (y1 / 1.05), x2 / 1.73, y2 / 1.71);
-	// 	else if (imagePngName == 'batman')
-	// 		canvas.getContext('2d').drawImage(batman, x1 - (x1 / 1.30), 0, x2 - (x2 / 2.50), y2 / 1.66);
-	// 	else if (imagePngName == 'boss')
-	// 		canvas.getContext('2d').drawImage(boss, x1 - (x1 / 1.25), y1 - (y1 / 2.10), x2 - (x2 / 2.35), y2 - (y2 / 3));
-	// 	else if (imagePngName == 'chain')
-	// 		canvas.getContext('2d').drawImage(chain, x1 - (x1 / 1.3), y1 - (y1 / 2), x2 - (x2 / 2.5), y2);
-	// }
+		if (imagePngName == 'snapback')
+			canvas.getContext('2d').drawImage(snapback, x1 - (x1 / 1.43), 0, x2 - (x2 / 1.70), y2 - (y2 / 1.88));
+		else if (imagePngName == 'gangsta')
+			canvas.getContext('2d').drawImage(gangsta, 0, 0, x2, y2);
+		else if (imagePngName == 'lol')
+			canvas.getContext('2d').drawImage(lol, x1 / 3, y1 - (y1 / 1.05), x2 / 1.73, y2 / 1.71);
+		else if (imagePngName == 'batman')
+			canvas.getContext('2d').drawImage(batman, x1 - (x1 / 1.30), 0, x2 - (x2 / 2.50), y2 / 1.66);
+		else if (imagePngName == 'boss')
+			canvas.getContext('2d').drawImage(boss, x1 - (x1 / 1.25), y1 - (y1 / 2.10), x2 - (x2 / 2.35), y2 - (y2 / 3));
+		else if (imagePngName == 'chain')
+			canvas.getContext('2d').drawImage(chain, x1 - (x1 / 1.3), y1 - (y1 / 2), x2 - (x2 / 2.5), y2);
+	}
 
 	function selectFilter()
 	{
 		if (imagePngName == 'snapback')
-			filter = 0;
+			filter = '/img/snapback.png';
 		else if (imagePngName == 'gangsta')
-			filter = 1;
+			filter = '/img/gangsta.png';
 		else if (imagePngName == 'lol')
-			filter = 2;
+			filter = '/img/lol.png';
 		else if (imagePngName == 'batman')
-			filter = 3;
+			filter = '/img/batman.png';
 		else if (imagePngName == 'boss')
-			filter = 4;
+			filter = '/img/boss.png';
 		else if (imagePngName == 'chain')
-			filter = 5;
+			filter = '/img/chain.png';
 		return (filter);
+	}
+
+	function sendPicture(data, filterPath)
+	{
+		var xml = new XMLHttpRequest()
+		xml.open('POST', '../members/scripts/mergeImage.php', true);
+		xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xml.send("data=" + data + "&filterPath=" + filterPath);
+		xml.onload = function () {
+			window.location.reload();
+		}
 	}
 
 	function takePicture()
@@ -187,8 +198,8 @@
 			importImg.style.visibility = 'hidden';
 			canvas.style.visibility = 'visible';
 		}
-		//addPng(imagePngName);
-		var filterNumber = selectFilter(imagePngName);
+		addPng(imagePngName);
+		var filterPath = selectFilter(imagePngName);
 		if (closeIconCreated == 0 && saveIconCreated == 0)
 		{
 			closeIcon = createCloseIcon();
@@ -201,12 +212,13 @@
 			saveIcon.addEventListener('click', function()
 			{
 				var data = canvas.toDataURL('image/png');
-				this.style.visibility='hidden';
-				this.innerHTML = `<form id="savePicture" action="scripts/actions.php" method="POST">
-									<input type="hidden" name="imageTaken" value="`+ data +`">
-									<input type="hidden" name="selectFilter" value="`+ filterNumber +`">
-								  </form>`;
-        		document.getElementById('savePicture').submit();
+				sendPicture(data, filterPath);
+				// this.style.visibility='hidden';
+				// this.innerHTML = `<form id="savePicture" action="scripts/actions.php" method="POST">
+				// 					<input type="hidden" name="imageTaken" value="`+ data +`">
+				// 					<input type="hidden" name="selectedFilter" value="`+ filterPath +`">
+				// 				  </form>`;
+    //     		document.getElementById('savePicture').submit();
 			});
 		}
 	}

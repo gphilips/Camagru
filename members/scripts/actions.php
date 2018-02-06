@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['username']) && !isset($
 
 require '../../templates/autoload.php';
 require_once '../../config/setup.php';
-//require 'mergeImage.php';
+require 'mergeImage.php';
 
 $session = Session::getInstance();
 $db = App::getDatabase($pdo);
@@ -18,9 +18,11 @@ $user = new User($getId);
 
 if ($_POST)
 {
-	if (isset($_POST['imageTaken']) && !empty($_POST['imageTaken']))
+	if (isset($_POST['imageTaken']) && !empty($_POST['imageTaken'])
+		&& isset($_POST['selectedFilter']) && !empty($_POST['selectedFilter']))
 	{
-		//$fusion = mergeImage($_POST['imageTaken'], );
+		$fusion = mergeImage($_POST['imageTaken'], $_POST['selectedFilter']);
+
 		$user->setPhoto($db, htmlspecialchars($fusion));
 		$session->setFlash('successNav', 'Your picture has been successfully added.');
 		App::redirect($_SERVER['HTTP_REFERER']);
