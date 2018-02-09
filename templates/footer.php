@@ -1,3 +1,3 @@
-	<footer>© 2017 gphilips</footer>
+	<footer>© Camagru <?php echo date("Y");?> - gphilips</footer>
 </body>
 </html>

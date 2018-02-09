@@ -18,16 +18,7 @@ $user = new User($getId);
 
 if ($_POST)
 {
-	if (isset($_POST['imageTaken']) && !empty($_POST['imageTaken'])
-		&& isset($_POST['selectedFilter']) && !empty($_POST['selectedFilter']))
-	{
-		$fusion = mergeImage($_POST['imageTaken'], $_POST['selectedFilter']);
-
-		$user->setPhoto($db, htmlspecialchars($fusion));
-		$session->setFlash('successNav', 'Your picture has been successfully added.');
-		App::redirect($_SERVER['HTTP_REFERER']);
-	}
-	else if (isset($_POST['imageDelete']) && !empty($_POST['imageDelete']) && is_numeric($_POST['imageDelete']))
+	if (isset($_POST['imageDelete']) && !empty($_POST['imageDelete']) && is_numeric($_POST['imageDelete']))
 	{
 		$user->delete($db, 'photos', intval($_POST['imageDelete']));
 		$session->setFlash('successNav', 'Your picture has been successfully removed.');
