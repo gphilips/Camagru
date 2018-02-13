@@ -11,9 +11,10 @@ require_once '../../config/setup.php';
 $session = Session::getInstance();
 $db = App::getDatabase($pdo);
 $auth = new Auth($session);
+$user = new User($_SESSION['auth']['id']);
 
 if (!empty($_POST) && isset($_POST['data'])
-	&& isset($_POST['filterPath']) && isset($_POST['filterSize']))
+	&& isset($_POST['filterPath']) && isset($_POST['imported']))
 {
 	$id = $_SESSION['auth']['id'];
 	$dir = "../../img/photos/".$id."/";
@@ -33,12 +34,9 @@ if (!empty($_POST) && isset($_POST['data'])
 
 	header ("Content-type: image/png");
 	header("Content-type: image/jpeg");
+	header("Content-type: image/gif");
 
 	$img_filter = imagecreatefrompng($_POST['filterPath']);
-	$filter_x = intval($_POST['filterSize'][0]);
-	$filter_y = intval($_POST['filterSize'][1]);
-	$filter_w = intval($_POST['filterSize'][2]);
-	$filter_h = intval($_POST['filterSize'][3]);
 
 	imagealphablending($img_filter, true);
 	imagesavealpha($img_filter, true);
@@ -47,22 +45,21 @@ if (!empty($_POST) && isset($_POST['data'])
 		$dest = imagecreatefrompng("$filePath");
 	else if ($type == "jpeg" || $type == "jpg")
 		$dest = imagecreatefromjpeg("$filePath");
+	else if ($type == "gif")
+		$dest = imagecreatefromgif("$filePath");
 	
-	$dest_w = imagesx($dest);
-	$dest_h = imagesy($dest);
-	//$img_filter = imagecreatetruecolor($dest_w, $dest_h);
-	$dest_x = ($dest_w - $filter_w);
-	$dest_y = ($dest_h - $filter_h);
-	imagecopy($dest, $img_filter, $dest_x, $dest_y, $filter_x, $filter_y, $filter_w, $filter_h);
-	//imagecopyresampled($dest, $img_filter, 0, 0, $filter_x, $filter_y, $dest_w, $dest_h, $filter_w, $filter_h);
+	$filter_w = ($_POST['imported'] == false) ? imagesx($img_filter) : imagesx($img_filter) + 200;
+	$filter_h = ($_POST['imported'] == false) ? imagesy($img_filter) : imagesx($img_filter) + 300;	
+	print_r($_POST['imported']);
+	imagecopyresampled($dest, $img_filter, 0, 0, 0, 0, 512, 384, $filter_w, $filter_h);
 	imagepng($dest, $dir."/fusion".'.'.$type);
 	imagedestroy($img_filter);
 	imagedestroy($dest);
 	unlink($filePath);
 	rename($dir.'fusion.'.$type, $filePath);
 
-	// $user->setPhoto($db, htmlspecialchars($fusion));
-	// $session->setFlash('successNav', 'Your picture has been successfully added.');
+	$user->setPhoto($db, htmlspecialchars($id.'/'.$datePhoto.'.'.$type));
+	$session->setFlash('successNav', 'Your picture has been successfully added.');
 }
 
 ?>

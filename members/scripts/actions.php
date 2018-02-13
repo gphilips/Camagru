@@ -5,7 +5,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET['username']) && !isset($
     header('Location: /camagru/index.php');	
 }
 
-require '../../templates/autoload.php';
 require_once '../../config/setup.php';
 require 'mergeImage.php';
 

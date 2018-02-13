@@ -31,7 +31,7 @@ $photos = $user->getMyPhotos($db);
 	if (!empty($photos)) {
 		foreach ($photos as $photo) {
 	?>
-		<img class="miniature" id=<?= intval($photo['id']); ?> src=<?= htmlspecialchars($photo['content']); ?> />
+		<img class="miniature" id=<?= intval($photo['id']); ?> src="<?= CAMAGRU_ROOT?>/img/photos/<?=htmlspecialchars($photo['content']); ?>" />
 		<div class="actions">
 			<?php if ($user->verifyMyPhoto($db, intval($photo['id']))) { ?>
 				<img class='delete-mini mini-icon' src="<?= CAMAGRU_ROOT ?>/img/delete.png" alt="delete" />

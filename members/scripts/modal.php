@@ -12,7 +12,7 @@ if (isset($modal) && $modal) {
 ?>
 <div id="overlay">
 	<div id="modal">
-		<img id=<?= intval($picture['id']); ?> src=<?= htmlspecialchars($picture['content']); ?>>
+		<img id=<?= intval($picture['id']); ?> src="<?= CAMAGRU_ROOT ?>/img/photos/<?= htmlspecialchars($picture['content']); ?>">
 		<div id="info">
 			<div id="head">
 				<p id="author"><strong><?= htmlspecialchars($user->getUsername($db, $picture['user_id'])); ?></strong></p>

@@ -150,62 +150,9 @@
 			canvas.getContext('2d').drawImage(chain, dx, dy, width, height);
 	}
 
-	function getFilterSize()
-	{
-		var	canvas = document.getElementById('canvas'),
-			y1 = canvas.height,
-			y2 = canvas.height,
-			x1 = canvas.width,
-			x2 = canvas.width;
-
-		var tab = [];
-		if (imagePngName == 'snapback')
-		{
-			tab[0] = x1 - (x1 / 1.43);
-			tab[1] = 0;
-			tab[2] = x2 - (x2 / 1.70);
-			tab[3] = y2 - (y2 / 1.88);
-		}
-		else if (imagePngName == 'gangsta')
-		{
-			tab[0] = 0;
-			tab[1] = 0;
-			tab[2] = x2;
-			tab[3] = y2;
-		}
-		else if (imagePngName == 'lol')
-		{
-			tab[0] = x1 / 3;
-			tab[1] = y1 - (y1 / 1.05);
-			tab[2] = x2 / 1.73;
-			tab[3] = y2 / 1.71;
-		}
-		else if (imagePngName == 'batman')
-		{
-			tab[0] = x1 - (x1 / 1.30);
-			tab[1] = 0;
-			tab[2] = x2 - (x2 / 2.50);
-			tab[3] = y2 / 1.66;
-		}
-		else if (imagePngName == 'boss')
-		{
-			tab[0] = x1 - (x1 / 1.25);
-			tab[1] = y1 - (y1 / 2.10);
-			tab[2] = x2 - (x2 / 2.35);
-			tab[3] = y2 - (y2 / 3);
-		}
-		else if (imagePngName == 'chain')
-		{
-			tab[0] = x1 - (x1 / 1.3);
-			tab[1] = y1 - (y1 / 2);
-			tab[2] = x2 - (x2 / 2.5);
-			tab[3] = y2;
-		}
-		return (tab);
-	}
-
 	function selectFilter()
 	{
+		var filter;
 		if (imagePngName == 'snapback')
 			filter = '../../img/snapback.png';
 		else if (imagePngName == 'gangsta')
@@ -221,39 +168,44 @@
 		return (filter);
 	}
 
-	function sendPicture(data, filterPath, filterSize)
+	function sendPicture(data, filterPath, imported)
 	{
 		var xml = new XMLHttpRequest()
 		xml.open('POST', '../members/scripts/mergeImage.php', true);
 		xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xml.send("data="+data+"&filterPath="+filterPath+"&filterSize="+filterSize);
-		// xml.onreadystatechange = function() {
-  //       	if (this.readyState == 4 && this.status == 200)
-  //           	console.log(this.responseText);
-  //       }
+		xml.send("data="+data+"&filterPath="+filterPath+"&imported="+imported);
+	//	xml.onload = function() {
+       //     window.location.reload();
+     //   }
 	}
 
 	function takePicture()
 	{
+		var imported;
 		if (isCamera)
 		{
 			canvas.width = cam.offsetWidth;
 			canvas.height = cam.offsetHeight;
 			canvas.getContext('2d').drawImage(cam, 0, 0, cam.offsetWidth, cam.offsetHeight);
+			imported = false;
 		}
 		else
 		{
 			var importImg = document.getElementById('importImg');
 			importImg.style.visibility = 'hidden';
 			canvas.style.visibility = 'visible';
+			imported = true;
 		}
-		var filterPath = selectFilter(imagePngName);
-		var tabSize = getFilterSize();
-		var data = canvas.toDataURL('image/png');
 
-		if (filterPath && tabSize)
-			addPng(tabSize[0], tabSize[1], tabSize[2], tabSize[3]);
-		
+		var data = canvas.toDataURL('image/png');
+		var filterPath = selectFilter();
+		if (filterPath)
+		{
+			var width = (importImg) ? 300 : 512;
+			var height = (importImg) ? 200 : 384;
+			addPng(0, 0, width, height);
+		}
+
 		if (closeIconCreated == 0 && saveIconCreated == 0)
 		{
 			closeIcon = createCloseIcon();
@@ -261,11 +213,14 @@
 			snap.appendChild(closeIcon);
 			snap.appendChild(saveIcon);
 			closeIconCreated = 1;
-			saveIconCreated = 1;
+			saveIconCreated = 1;		
 			
 			closeIcon.addEventListener('click', clearPicture);
-			saveIcon.addEventListener('click', sendPicture(data, filterPath, tabSize));
-		}
+			saveIcon.addEventListener('click', function () {
+				sendPicture(data, filterPath, imported);
+				clearPicture();
+			});
+		}		
 	}
 
 })();

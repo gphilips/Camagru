@@ -18,7 +18,7 @@ require 'scripts/modal.php';
 	?>
 		<div class="cadre">
 		<a href="gallery.php?id=<?= intval($photo['id']); ?>">
-			<img class="miniature" id=<?= intval($photo['id']); ?> src=<?= htmlspecialchars($photo['content']); ?> />
+			<img class="miniature" id=<?= intval($photo['id']); ?> src="<?= CAMAGRU_ROOT ?>/img/photos/<?= htmlspecialchars($photo['content']); ?>" />
 		</a>
 		<div class="actions">
 			<?php if ($user->verifyMyPhoto($db, intval($photo['id']))) { ?>
