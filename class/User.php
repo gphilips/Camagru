@@ -119,6 +119,7 @@ class User
 	public function delete($db, $table, $id)
 	{
 		$req = $db->query("DELETE FROM $table WHERE id = ? AND user_id = ?", [$id, $this->user_id]);
+		
 		return ($req) ? true : false;
 	}
 

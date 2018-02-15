@@ -19,8 +19,11 @@ if ($_POST)
 {
 	if (isset($_POST['imageDelete']) && !empty($_POST['imageDelete']) && is_numeric($_POST['imageDelete']))
 	{
+		$photo = $user->getPhoto($db, intval($_POST['imageDelete']));
 		$user->delete($db, 'photos', intval($_POST['imageDelete']));
-		$session->setFlash('successNav', 'Your picture has been successfully removed.');
+		$session->setFlash('success', 'Your picture has been successfully removed.');
+		if ($photo && file_exists('../../img/photos/'.$photo['content']))
+			unlink('../../img/photos/'.$photo['content']);
 		App::redirect($_SERVER['HTTP_REFERER']);
 	}
 	else if (isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['send']) && !empty($_POST['send']) && is_numeric($_POST['send']))

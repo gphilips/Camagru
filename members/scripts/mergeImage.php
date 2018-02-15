@@ -48,9 +48,8 @@ if (!empty($_POST) && isset($_POST['data'])
 	else if ($type == "gif")
 		$dest = imagecreatefromgif("$filePath");
 	
-	$filter_w = ($_POST['imported'] == false) ? imagesx($img_filter) : imagesx($img_filter) + 200;
-	$filter_h = ($_POST['imported'] == false) ? imagesy($img_filter) : imagesx($img_filter) + 300;	
-	print_r($_POST['imported']);
+	$filter_w = ($_POST['imported'] == false) ? imagesx($img_filter) : imagesx($img_filter) + 240;
+	$filter_h = ($_POST['imported'] == false) ? imagesy($img_filter) : imagesx($img_filter) + 250;
 	imagecopyresampled($dest, $img_filter, 0, 0, 0, 0, 512, 384, $filter_w, $filter_h);
 	imagepng($dest, $dir."/fusion".'.'.$type);
 	imagedestroy($img_filter);
@@ -59,7 +58,7 @@ if (!empty($_POST) && isset($_POST['data'])
 	rename($dir.'fusion.'.$type, $filePath);
 
 	$user->setPhoto($db, htmlspecialchars($id.'/'.$datePhoto.'.'.$type));
-	$session->setFlash('successNav', 'Your picture has been successfully added.');
+	$session->setFlash('success', 'Your picture has been successfully added.');
 }
 
 ?>

@@ -174,9 +174,9 @@
 		xml.open('POST', '../members/scripts/mergeImage.php', true);
 		xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xml.send("data="+data+"&filterPath="+filterPath+"&imported="+imported);
-	//	xml.onload = function() {
-       //     window.location.reload();
-     //   }
+		xml.onload = function() {
+           window.location.reload();
+       }
 	}
 
 	function takePicture()
@@ -198,13 +198,6 @@
 		}
 
 		var data = canvas.toDataURL('image/png');
-		var filterPath = selectFilter();
-		if (filterPath)
-		{
-			var width = (importImg) ? 300 : 512;
-			var height = (importImg) ? 200 : 384;
-			addPng(0, 0, width, height);
-		}
 
 		if (closeIconCreated == 0 && saveIconCreated == 0)
 		{
@@ -215,7 +208,18 @@
 			closeIconCreated = 1;
 			saveIconCreated = 1;		
 			
+			var filterPath = selectFilter();
+			if (filterPath)
+			{
+				var width = (importImg) ? 300 : 512;
+				var height = (importImg) ? 200 : 384;
+				addPng(0, 0, width, height);
+			}
 			closeIcon.addEventListener('click', clearPicture);
+			take.addEventListener('click', function () {
+				clearPicture();
+				takePicture();
+			});
 			saveIcon.addEventListener('click', function () {
 				sendPicture(data, filterPath, imported);
 				clearPicture();
