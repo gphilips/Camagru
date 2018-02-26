@@ -32,7 +32,7 @@ if (!empty($_POST) && isset($_POST['data'])
 	$filePath = $dir.$datePhoto.'.'.$type;
 	file_put_contents($filePath, $dataDecode);
 
-	header ("Content-type: image/png");
+	header("Content-type: image/png");
 	header("Content-type: image/jpeg");
 	header("Content-type: image/gif");
 
@@ -47,9 +47,10 @@ if (!empty($_POST) && isset($_POST['data'])
 		$dest = imagecreatefromjpeg("$filePath");
 	else if ($type == "gif")
 		$dest = imagecreatefromgif("$filePath");
-	
-	$filter_w = ($_POST['imported'] == false) ? imagesx($img_filter) : imagesx($img_filter) + 240;
-	$filter_h = ($_POST['imported'] == false) ? imagesy($img_filter) : imagesx($img_filter) + 250;
+
+	$filter_w = ($_POST['imported'] === "false") ? imagesx($img_filter) : imagesx($img_filter) + 240;
+	$filter_h = ($_POST['imported'] === "false") ? imagesy($img_filter) : imagesy($img_filter) + 250;
+
 	imagecopyresampled($dest, $img_filter, 0, 0, 0, 0, 512, 384, $filter_w, $filter_h);
 	imagepng($dest, $dir."/fusion".'.'.$type);
 	imagedestroy($img_filter);
