@@ -528,10 +528,18 @@ span {
 }
 
 #modal #info #comments {
+    overflow-y: auto;
+    overflow-x: hidden;
     width: 29vw;
     height: 30vh;
     padding: 2vh 3vw;
     background-color: rgba(244, 233, 217, 0.4);
+}
+
+#modal #info #comments .content {
+    overflow-y: hidden;
+    overflow-x: auto;
+
 }
 
 #comments .deleteCom-mini {

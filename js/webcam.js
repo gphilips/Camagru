@@ -13,7 +13,8 @@
     	gangsta = document.getElementById('gangsta'),
     	lol = document.getElementById('lol'),
     	batman = document.getElementById('batman'),
-    	boss = document.getElementById('boss'),
+    	troll = document.getElementById('troll'),
+    	meme = document.getElementById('meme'),
     	imagePngName = '',
     	i = -1;
 
@@ -64,13 +65,6 @@
 
 	function clearPicture()
 	{
-		canvas.setAttribute('width', 0);
-		canvas.setAttribute('height', 0);
-		snap.removeChild(closeIcon);
-		snap.removeChild(saveIcon);
-		closeIconCreated = 0;
-		saveIconCreated = 0;
-		if (!isCamera)
 			location.reload(false);
 	}
 
@@ -144,10 +138,10 @@
 			canvas.getContext('2d').drawImage(lol, dx, dy, width, height);
 		else if (imagePngName == 'batman')
 			canvas.getContext('2d').drawImage(batman, dx, dy, width, height);
-		else if (imagePngName == 'boss')
-			canvas.getContext('2d').drawImage(boss, dx, dy, width, height);
-		else if (imagePngName == 'chain')
-			canvas.getContext('2d').drawImage(chain, dx, dy, width, height);
+		else if (imagePngName == 'troll')
+			canvas.getContext('2d').drawImage(troll, dx, dy, width, height);
+		else if (imagePngName == 'meme')
+			canvas.getContext('2d').drawImage(meme, dx, dy, width, height);
 	}
 
 	function selectFilter()
@@ -161,10 +155,10 @@
 			filter = '../../img/lol.png';
 		else if (imagePngName == 'batman')
 			filter = '../../img/batman.png';
-		else if (imagePngName == 'boss')
-			filter = '../../img/boss.png';
-		else if (imagePngName == 'chain')
-			filter = '../../img/chain.png';
+		else if (imagePngName == 'troll')
+			filter = '../../img/troll.png';
+		else if (imagePngName == 'meme')
+			filter = '../../img/meme.png';
 		return (filter);
 	}
 
@@ -196,7 +190,7 @@
 			canvas.style.visibility = 'visible';
 			imported = true;
 		}
-
+		snap.removeChild(take);
 		var data = canvas.toDataURL('image/png');
 
 		if (closeIconCreated == 0 && saveIconCreated == 0)
@@ -207,7 +201,7 @@
 			snap.appendChild(saveIcon);
 			closeIconCreated = 1;
 			saveIconCreated = 1;		
-			
+
 			var filterPath = selectFilter();
 			if (filterPath)
 			{
@@ -216,10 +210,6 @@
 				addPng(0, 0, width, height);
 			}
 			closeIcon.addEventListener('click', clearPicture);
-			take.addEventListener('click', function () {
-				clearPicture();
-				takePicture();
-			});
 			saveIcon.addEventListener('click', function () {
 				sendPicture(data, filterPath, imported);
 				clearPicture();

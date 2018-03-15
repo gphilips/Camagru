@@ -19,7 +19,7 @@ class Auth
 	public function register($db, $username, $password, $email)
 	{
 		$password = hash('whirlpool', $password);	
-		$token = bin2hex(random_bytes(50));
+		$token = sha1(uniqid($username, true));
 		
 		$req = $db->query('INSERT INTO users SET username = ?, password = ?, email = ?, confirm_token = ?', [$username, $password, $email, $token]);
 
@@ -147,7 +147,7 @@ class Auth
 
 		if ($user)
 		{
-			$reset_token = bin2hex(random_bytes(50));
+			$reset_token = sha1(uniqid($user['id'], true));
 			$db->query("UPDATE users SET reset_token = ?, reset_at = NOW() WHERE id = ?", [$reset_token, $user['id']]);
 
 			$subject = "Reset your password";

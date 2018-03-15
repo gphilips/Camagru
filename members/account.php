@@ -17,8 +17,8 @@ $photos = $user->getMyPhotos($db);
 		<li class="imagePng"><img id ='gangsta' src="<?= CAMAGRU_ROOT ?>/img/gangsta.png" alt='gangsta'></li>
 		<li class="imagePng"><img id ='lol' src="<?= CAMAGRU_ROOT ?>/img/lol.png" alt='lol'></li>
 		<li class="imagePng"><img id ='batman' src="<?= CAMAGRU_ROOT ?>/img/batman.png" alt='batman'></li>
-		<li class="imagePng"><img id ='boss' src="<?= CAMAGRU_ROOT ?>/img/boss.png" alt='boss'></li>
-		<li class="imagePng"><img id ='chain' src="<?= CAMAGRU_ROOT ?>/img/chain.png" alt='chain'></li>
+		<li class="imagePng"><img id ='troll' src="<?= CAMAGRU_ROOT ?>/img/troll.png" alt='troll'></li>
+		<li class="imagePng"><img id ='meme' src="<?= CAMAGRU_ROOT ?>/img/meme.png" alt='meme'></li>
 	</ul>
 </div>
 
